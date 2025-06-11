@@ -138,27 +138,31 @@ export default function Home() {
       alignItems: 'center', 
       justifyContent: 'center', 
       textAlign: 'center',
-      height: 'calc(100vh - 200px)',
+      minHeight: 'calc(100vh - 200px)',
       gap: '24px',
       position: 'relative',
       zIndex: 10,
-      transform: 'scale(1)',
       padding: '0 16px',
-      fontFamily: 'Consolas, monospace'
+      fontFamily: 'Consolas, monospace',
+      width: '100%',
+      maxWidth: 600,
+      margin: '0 auto',
+      boxSizing: 'border-box'
     }}>
-      <h1 style={{ fontSize: '24px', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace', marginBottom: 0, lineHeight: 1 }}>Antes de apostar, pergunta à UNAGI</h1>
+      <h1 style={{ fontSize: 'clamp(18px, 5vw, 24px)', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace', marginBottom: 0, lineHeight: 1, textAlign: 'center' }}>Antes de apostar, pergunta à UNAGI</h1>
       <h2 style={{ 
-        fontSize: '24px', 
+        fontSize: 'clamp(18px, 5vw, 24px)', 
         letterSpacing: '0.05em', 
         fontFamily: 'Consolas, monospace',
         marginBottom: '4px',
         marginTop: 0,
-        lineHeight: 1
+        lineHeight: 1,
+        textAlign: 'center'
       }}>
         qualquer jogo, qualquer confronto
       </h2>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 24, marginTop: 4 }}>
-        <div style={{ position: 'relative' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 12, width: '100%', marginTop: 4 }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
           <input
             ref={inputARef}
             type="text"
@@ -167,7 +171,6 @@ export default function Home() {
             placeholder="Time A"
             style={{
               width: '100%',
-              height: 48,
               background: '#18181b',
               color: 'white',
               border: '1px solid #333',
@@ -181,7 +184,7 @@ export default function Home() {
           />
         </div>
         <div ref={xRef} style={{ fontSize: 32, fontWeight: 'bold', color: '#d1d5db', margin: '0 8px', userSelect: 'none' }}>X</div>
-        <div style={{ position: 'relative' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
           <input
             ref={inputBRef}
             type="text"
@@ -190,7 +193,6 @@ export default function Home() {
             placeholder="Time B"
             style={{
               width: '100%',
-              height: 48,
               background: '#18181b',
               color: 'white',
               border: '1px solid #333',
@@ -220,6 +222,7 @@ export default function Home() {
             marginLeft: 8,
             cursor: (!teamA || !teamB || loading) ? 'not-allowed' : 'pointer',
             opacity: (!teamA || !teamB || loading) ? 0.5 : 1,
+            flexShrink: 0
           }}
         >
           {loading ? '...' : '→'}

@@ -18,21 +18,35 @@ body {
   margin: 0;
   padding: 0;
   background: black;
-  overflow: hidden;
+  overflow-x: hidden;
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
 }
 
-/* Ajuste de escala para celular */
-@media (max-width: 768px) {
-  body {
-    zoom: 0.67;
-    -moz-transform: scale(0.67);
-    -moz-transform-origin: 0 0;
-    -o-transform: scale(0.67);
-    -o-transform-origin: 0 0;
-    -webkit-transform: scale(0.67);
-    -webkit-transform-origin: 0 0;
+input, select, button {
+  font-family: 'Consolas', monospace !important;
+  font-size: 20px !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 800px) {
+  h1, h2 {
+    font-size: clamp(16px, 5vw, 24px) !important;
+    text-align: center !important;
+  }
+  input, select, button {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: clamp(14px, 4vw, 20px) !important;
+    margin: 4px 0 !important;
+    height: 44px !important;
+  }
+  main {
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 0 4px !important;
+    align-items: stretch !important;
   }
 }
 
