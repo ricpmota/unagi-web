@@ -41,10 +41,16 @@ input, select, option {
 }
 
 @media (max-width: 770px), (max-height: 1000px) {
-  input, select, button {
+  input, select {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
+  }
+  .main-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+    width: 100% !important;
   }
 } 
