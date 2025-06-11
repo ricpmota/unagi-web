@@ -301,8 +301,18 @@ export default function Home() {
         padding: '0 16px',
         fontFamily: 'Consolas, monospace'
       }}>
-        <h1 style={{ fontSize: '24px', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace' }}>Antes de apostar, pergunta à UNAGI</h1>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 24, marginTop: 24 }}>
+        <h1 style={{ fontSize: '24px', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace', marginBottom: 0, lineHeight: 1 }}>Antes de apostar, pergunta à UNAGI</h1>
+        <h2 style={{ 
+          fontSize: '24px', 
+          letterSpacing: '0.05em', 
+          fontFamily: 'Consolas, monospace',
+          marginBottom: '4px',
+          marginTop: 0,
+          lineHeight: 1
+        }}>
+          qualquer jogo, qualquer confronto
+        </h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 24, marginTop: 4 }}>
           <div style={{ position: 'relative' }}>
             <input
               ref={inputARef}
