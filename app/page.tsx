@@ -287,157 +287,169 @@ export default function Home() {
       boxSizing: 'border-box'
     }}>
       <Stars center={starCenter} />
-      <main style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        height: 'calc(100vh - 200px)',
-        gap: '24px',
-        position: 'relative',
-        zIndex: 10,
-        transform: 'scale(1)',
-        padding: '0 16px',
-        fontFamily: 'Consolas, monospace'
+      <main style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        minHeight: 'calc(100vh - 64px)',
+        padding: '20px',
+        boxSizing: 'border-box',
+        width: '100%',
+        maxWidth: '100%'
       }}>
-        <h1 style={{ fontSize: '24px', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace', marginBottom: 0, lineHeight: 1 }}>Antes de apostar, pergunta à UNAGI</h1>
-        <h2 style={{ 
-          fontSize: '24px', 
-          letterSpacing: '0.05em', 
-          fontFamily: 'Consolas, monospace',
-          marginBottom: '4px',
-          marginTop: 0,
-          lineHeight: 1
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          width: '100%',
+          maxWidth: '600px'
         }}>
-          qualquer jogo, qualquer confronto
-        </h2>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 24, marginTop: 4 }}>
-          <div style={{ position: 'relative' }}>
-            <input
-              ref={inputARef}
-              type="text"
-              value={teamA}
-              onChange={handleInputA}
-              onFocus={() => {
-                if (teamA.length >= 3) {
-                  const filtered = filterSuggestions(teamA);
-                  setSuggestionsA(filtered);
-                  setShowSuggestionsA(true);
-                }
-              }}
-              placeholder="Time A"
-              style={{
-                width: 220,
-                height: 48,
-                background: '#18181b',
-                color: 'white',
-                border: '1px solid #333',
-                borderRadius: 8,
-                fontSize: 20,
-                padding: '0 16px',
-                outline: 'none',
-                fontFamily: 'Consolas, monospace',
-              }}
-              autoComplete="off"
-            />
-            {showSuggestionsA && suggestionsA.length > 0 && (
-              <ul style={{
-                position: 'absolute',
-                top: 52,
-                left: 0,
-                width: 220,
-                background: '#222',
-                border: '1px solid #333',
-                borderRadius: 8,
-                maxHeight: 200,
-                overflowY: 'auto',
-                zIndex: 30,
-                margin: 0,
-                padding: 0,
-                listStyle: 'none',
-              }}>
-                {suggestionsA.map(name => (
-                  <li
-                    key={name}
-                    onMouseDown={() => handleSuggestionClickA(name)}
-                    style={{
-                      padding: '10px 16px',
-                      cursor: 'pointer',
-                      color: 'white',
-                      background: name === teamA ? '#333' : 'none',
-                      fontSize: '13px',
-                      textAlign: 'left'
-                    }}
-                  >
-                    {name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div ref={xRef} style={{ fontSize: 32, fontWeight: 'bold', color: '#d1d5db', margin: '0 8px', userSelect: 'none' }}>X</div>
-          <div style={{ position: 'relative' }}>
-            <select
-              value={teamB}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setTeamB(e.target.value); setResult(null); }}
-              disabled={!teamASelected || adversaries.length === 0}
-              style={{
-                width: 220,
-                height: 48,
-                background: '#18181b',
-                color: 'white',
-                border: '1px solid #333',
-                borderRadius: 8,
-                fontSize: 20,
-                padding: '0 16px',
-                outline: 'none',
-                fontFamily: 'Consolas, monospace',
-                appearance: 'none',
-                WebkitAppearance: 'none',
-                MozAppearance: 'none',
-                cursor: !teamASelected || adversaries.length === 0 ? 'not-allowed' : 'pointer',
-              }}
-            >
-              {!teamASelected ? (
-                <option value="" disabled>Escolha o Time A</option>
-              ) : adversaries.length === 0 ? (
-                <option value="" disabled>Nenhum adversário encontrado</option>
-              ) : (
-                <option value="" disabled>Escolha o Time B</option>
+          <h1 style={{ 
+            fontSize: 'clamp(18px, 5vw, 24px)', 
+            letterSpacing: '0.05em', 
+            fontFamily: 'Consolas, monospace', 
+            marginBottom: 0, 
+            lineHeight: 1,
+            textAlign: 'center'
+          }}>Antes de apostar, pergunta à UNAGI</h1>
+          <h2 style={{ 
+            fontSize: 'clamp(18px, 5vw, 24px)', 
+            letterSpacing: '0.05em', 
+            fontFamily: 'Consolas, monospace',
+            marginBottom: '4px',
+            marginTop: 0,
+            lineHeight: 1,
+            textAlign: 'center'
+          }}>
+            qualquer jogo, qualquer confronto
+          </h2>
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            gap: 'clamp(12px, 3vw, 24px)', 
+            marginTop: 4,
+            width: '100%',
+            flexDirection: 'column'
+          }}>
+            <div style={{ position: 'relative', width: '100%' }}>
+              <input
+                ref={inputARef}
+                type="text"
+                value={teamA}
+                onChange={handleInputA}
+                onFocus={() => {
+                  if (teamA.length >= 3) {
+                    const filtered = filterSuggestions(teamA);
+                    setSuggestionsA(filtered);
+                    setShowSuggestionsA(true);
+                  }
+                }}
+                placeholder="Time A"
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  fontSize: 'clamp(16px, 4vw, 20px)',
+                  background: '#18181b',
+                  border: '1px solid #333',
+                  borderRadius: '8px',
+                  color: 'white',
+                  marginBottom: '8px'
+                }}
+                autoComplete="off"
+              />
+              {showSuggestionsA && suggestionsA.length > 0 && (
+                <ul style={{
+                  position: 'absolute',
+                  top: 52,
+                  left: 0,
+                  width: '100%',
+                  background: '#222',
+                  border: '1px solid #333',
+                  borderRadius: '8px',
+                  maxHeight: 200,
+                  overflowY: 'auto',
+                  zIndex: 30,
+                  margin: 0,
+                  padding: 0,
+                  listStyle: 'none',
+                }}>
+                  {suggestionsA.map(name => (
+                    <li
+                      key={name}
+                      onMouseDown={() => handleSuggestionClickA(name)}
+                      style={{
+                        padding: '10px 16px',
+                        cursor: 'pointer',
+                        color: 'white',
+                        background: name === teamA ? '#333' : 'none',
+                        fontSize: '13px',
+                        textAlign: 'left'
+                      }}
+                    >
+                      {name}
+                    </li>
+                  ))}
+                </ul>
               )}
-              {adversaries.map(name => (
-                <option key={name} value={name}>{name}</option>
-              ))}
-            </select>
+            </div>
+            <div ref={xRef} style={{ fontSize: 32, fontWeight: 'bold', color: '#d1d5db', margin: '0 8px', userSelect: 'none' }}>X</div>
+            <div style={{ position: 'relative', width: '100%' }}>
+              <select
+                value={teamB}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setTeamB(e.target.value); setResult(null); }}
+                disabled={!teamASelected || adversaries.length === 0}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  fontSize: 'clamp(16px, 4vw, 20px)',
+                  background: '#18181b',
+                  color: 'white',
+                  border: '1px solid #333',
+                  borderRadius: '8px',
+                  outline: 'none',
+                  fontFamily: 'Consolas, monospace',
+                  appearance: 'none',
+                  WebkitAppearance: 'none',
+                  MozAppearance: 'none',
+                  cursor: !teamASelected || adversaries.length === 0 ? 'not-allowed' : 'pointer',
+                }}
+              >
+                {!teamASelected ? (
+                  <option value="" disabled>Escolha o Time A</option>
+                ) : adversaries.length === 0 ? (
+                  <option value="" disabled>Nenhum adversário encontrado</option>
+                ) : (
+                  <option value="" disabled>Escolha o Time B</option>
+                )}
+                {adversaries.map(name => (
+                  <option key={name} value={name}>{name}</option>
+                ))}
+              </select>
+            </div>
+            <button
+              onClick={predict}
+              style={{
+                padding: '12px 24px',
+                fontSize: 'clamp(16px, 4vw, 20px)',
+                background: '#22c55e',
+                border: 'none',
+                borderRadius: '8px',
+                color: 'white',
+                cursor: (!teamA || !teamB) ? 'not-allowed' : 'pointer',
+                width: '100%',
+                maxWidth: '300px'
+              }}
+              disabled={!teamA || !teamB}
+            >
+              Perguntar à UNAGI
+            </button>
           </div>
-          {/* Botão de busca */}
-          <button
-            id="predictBtn"
-            onClick={predict}
-            disabled={!teamA || !teamB}
-            style={{
-              background: '#222',
-              border: '1px solid #333',
-              borderRadius: 8,
-              color: 'white',
-              fontSize: 24,
-              width: 56,
-              height: 56,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginLeft: 8,
-              cursor: (!teamA || !teamB) ? 'not-allowed' : 'pointer',
-              opacity: (!teamA || !teamB) ? 0.5 : 1,
-            }}
-            aria-label="Buscar odds"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
-          </button>
-        </div>
-        <div id="predictionResult" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-          {result}
+          <div id="predictionResult" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: 24 }}>
+            {result}
+          </div>
         </div>
       </main>
     </div>
