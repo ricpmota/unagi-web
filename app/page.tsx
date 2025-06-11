@@ -68,7 +68,7 @@ export default function Home() {
   const [showSuggestionsA, setShowSuggestionsA] = useState(false);
   const [showSuggestionsB, setShowSuggestionsB] = useState(false);
   const inputARef = useRef<HTMLInputElement>(null);
-  const inputBRef = useRef<HTMLInputElement>(null);
+  const inputBRef = useRef<HTMLSelectElement>(null);
   const [adversaries, setAdversaries] = useState<string[]>([]);
   const xRef = useRef<HTMLDivElement>(null);
   const [starCenter, setStarCenter] = useState<{x: number, y: number}>({x: 0, y: 0});
@@ -287,159 +287,123 @@ export default function Home() {
       boxSizing: 'border-box'
     }}>
       <Stars center={starCenter} />
-      <main style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        height: 'calc(100vh - 200px)',
-        gap: '24px',
-        position: 'relative',
-        zIndex: 10,
-        transform: 'scale(1)',
-        padding: '0 16px',
-        fontFamily: 'Consolas, monospace'
-      }}>
-        <h1 style={{ fontSize: '24px', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace', marginBottom: 0, lineHeight: 1 }}>Antes de apostar, pergunta à UNAGI</h1>
-        <h2 style={{ 
-          fontSize: '24px', 
-          letterSpacing: '0.05em', 
+      <div className="main-container">
+        <main style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          textAlign: 'center',
+          minHeight: 'calc(100vh - 200px)',
+          gap: '24px',
+          position: 'relative',
+          zIndex: 10,
+          padding: '0 16px',
           fontFamily: 'Consolas, monospace',
-          marginBottom: '4px',
-          marginTop: 0,
-          lineHeight: 1
+          width: '100%',
+          maxWidth: 600,
+          margin: '0 auto',
+          boxSizing: 'border-box'
         }}>
-          qualquer jogo, qualquer confronto
-        </h2>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 24, marginTop: 4 }}>
-          <div style={{ position: 'relative' }}>
-            <input
-              ref={inputARef}
-              type="text"
-              value={teamA}
-              onChange={handleInputA}
-              onFocus={() => {
-                if (teamA.length >= 3) {
-                  const filtered = filterSuggestions(teamA);
-                  setSuggestionsA(filtered);
-                  setShowSuggestionsA(true);
-                }
-              }}
-              placeholder="Time A"
-              style={{
-                width: 220,
-                height: 48,
-                background: '#18181b',
-                color: 'white',
-                border: '1px solid #333',
-                borderRadius: 8,
-                fontSize: 20,
-                padding: '0 16px',
-                outline: 'none',
-                fontFamily: 'Consolas, monospace',
-              }}
-              autoComplete="off"
-            />
-            {showSuggestionsA && suggestionsA.length > 0 && (
-              <ul style={{
-                position: 'absolute',
-                top: 52,
-                left: 0,
-                width: 220,
-                background: '#222',
-                border: '1px solid #333',
-                borderRadius: 8,
-                maxHeight: 200,
-                overflowY: 'auto',
-                zIndex: 30,
-                margin: 0,
-                padding: 0,
-                listStyle: 'none',
-              }}>
-                {suggestionsA.map(name => (
-                  <li
-                    key={name}
-                    onMouseDown={() => handleSuggestionClickA(name)}
-                    style={{
-                      padding: '10px 16px',
-                      cursor: 'pointer',
-                      color: 'white',
-                      background: name === teamA ? '#333' : 'none',
-                      fontSize: '13px',
-                      textAlign: 'left'
-                    }}
-                  >
-                    {name}
-                  </li>
+          <h1 style={{ fontSize: 'clamp(18px, 5vw, 24px)', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace', marginBottom: 0, lineHeight: 1, textAlign: 'center' }}>Antes de apostar, pergunta à UNAGI</h1>
+          <h2 style={{ 
+            fontSize: 'clamp(18px, 5vw, 24px)', 
+            letterSpacing: '0.05em', 
+            fontFamily: 'Consolas, monospace',
+            marginBottom: '4px',
+            marginTop: 0,
+            lineHeight: 1,
+            textAlign: 'center'
+          }}>
+            qualquer jogo, qualquer confronto
+          </h2>
+          <div className="main-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, width: '100%', marginTop: 4 }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <input
+                ref={inputARef}
+                type="text"
+                value={teamA}
+                onChange={handleInputA}
+                placeholder="Time A"
+                style={{
+                  width: '100%',
+                  background: '#18181b',
+                  color: 'white',
+                  border: '1px solid #333',
+                  borderRadius: 8,
+                  fontSize: 20,
+                  padding: '0 16px',
+                  outline: 'none',
+                  fontFamily: 'Consolas, monospace',
+                }}
+                autoComplete="off"
+              />
+            </div>
+            <div ref={xRef} style={{ fontSize: 32, fontWeight: 'bold', color: '#d1d5db', margin: '0 8px', userSelect: 'none' }}>X</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <select
+                ref={inputBRef}
+                value={teamB}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setTeamB(e.target.value); setResult(null); }}
+                disabled={!teamASelected || adversaries.length === 0}
+                style={{
+                  width: '100%',
+                  background: '#18181b',
+                  color: 'white',
+                  border: '1px solid #333',
+                  borderRadius: 8,
+                  fontSize: 20,
+                  padding: '0 16px',
+                  outline: 'none',
+                  fontFamily: 'Consolas, monospace',
+                  appearance: 'none',
+                  WebkitAppearance: 'none',
+                  MozAppearance: 'none',
+                  cursor: !teamASelected || adversaries.length === 0 ? 'not-allowed' : 'pointer',
+                }}
+              >
+                {!teamASelected ? (
+                  <option value="" disabled>Escolha o Time A</option>
+                ) : adversaries.length === 0 ? (
+                  <option value="" disabled>Nenhum adversário encontrado</option>
+                ) : (
+                  <option value="" disabled>Escolha o Time B</option>
+                )}
+                {adversaries.map(name => (
+                  <option key={name} value={name}>{name}</option>
                 ))}
-              </ul>
-            )}
-          </div>
-          <div ref={xRef} style={{ fontSize: 32, fontWeight: 'bold', color: '#d1d5db', margin: '0 8px', userSelect: 'none' }}>X</div>
-          <div style={{ position: 'relative' }}>
-            <select
-              value={teamB}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setTeamB(e.target.value); setResult(null); }}
-              disabled={!teamASelected || adversaries.length === 0}
+              </select>
+            </div>
+            <button
+              onClick={predict}
+              disabled={!teamA || !teamB || loading}
               style={{
-                width: 220,
-                height: 48,
-                background: '#18181b',
-                color: 'white',
-                border: '1px solid #333',
+                background: '#22c55e',
+                border: 'none',
                 borderRadius: 8,
-                fontSize: 20,
-                padding: '0 16px',
-                outline: 'none',
-                fontFamily: 'Consolas, monospace',
-                appearance: 'none',
-                WebkitAppearance: 'none',
-                MozAppearance: 'none',
-                cursor: !teamASelected || adversaries.length === 0 ? 'not-allowed' : 'pointer',
+                color: 'white',
+                fontSize: 24,
+                width: 56,
+                height: 56,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: 8,
+                cursor: (!teamA || !teamB || loading) ? 'not-allowed' : 'pointer',
+                opacity: (!teamA || !teamB || loading) ? 0.5 : 1,
+                flexShrink: 0
               }}
             >
-              {!teamASelected ? (
-                <option value="" disabled>Escolha o Time A</option>
-              ) : adversaries.length === 0 ? (
-                <option value="" disabled>Nenhum adversário encontrado</option>
-              ) : (
-                <option value="" disabled>Escolha o Time B</option>
+              {loading ? '...' : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
               )}
-              {adversaries.map(name => (
-                <option key={name} value={name}>{name}</option>
-              ))}
-            </select>
+            </button>
           </div>
-          {/* Botão de busca */}
-          <button
-            id="predictBtn"
-            onClick={predict}
-            disabled={!teamA || !teamB}
-            style={{
-              background: '#222',
-              border: '1px solid #333',
-              borderRadius: 8,
-              color: 'white',
-              fontSize: 24,
-              width: 56,
-              height: 56,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginLeft: 8,
-              cursor: (!teamA || !teamB) ? 'not-allowed' : 'pointer',
-              opacity: (!teamA || !teamB) ? 0.5 : 1,
-            }}
-            aria-label="Buscar odds"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
-          </button>
-        </div>
-        <div id="predictionResult" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-          {result}
-        </div>
-      </main>
+          <div id="predictionResult" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            {result}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
