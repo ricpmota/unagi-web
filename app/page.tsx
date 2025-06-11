@@ -5,7 +5,6 @@ import Stars from './components/Stars';
 
 // Função utilitária para normalizar nomes (remover acentos, caixa baixa)
 function normalizeName(name: string) {
-  // Remove acentos e converte para minúsculas
   return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 }
 
@@ -58,39 +57,26 @@ async function fetchOddsWithCache(matchId: string) {
 }
 
 export default function Home() {
-  const [teamList, setTeamList] = useState<string[]>([]);
   const [teamA, setTeamA] = useState('');
   const [teamB, setTeamB] = useState('');
   const [result, setResult] = useState<null | JSX.Element>(null);
   const [loading, setLoading] = useState(false);
-  const [suggestionsA, setSuggestionsA] = useState<string[]>([]);
-  const [suggestionsB, setSuggestionsB] = useState<string[]>([]);
-  const [showSuggestionsA, setShowSuggestionsA] = useState(false);
-  const [showSuggestionsB, setShowSuggestionsB] = useState(false);
   const inputARef = useRef<HTMLInputElement>(null);
   const inputBRef = useRef<HTMLInputElement>(null);
-  const [adversaries, setAdversaries] = useState<string[]>([]);
   const xRef = useRef<HTMLDivElement>(null);
   const [starCenter, setStarCenter] = useState<{x: number, y: number}>({x: 0, y: 0});
-  const [teamASelected, setTeamASelected] = useState(false);
-  const [selectedTeam, setSelectedTeam] = useState('');
-  const [selectedAdversary, setSelectedAdversary] = useState('');
-  const [adversaryList, setAdversaryList] = useState<string[]>([]);
-  const [showAdversarySuggestions, setShowAdversarySuggestions] = useState(false);
 
   useEffect(() => {
     const menuBtn = document.getElementById('menuBtn');
     const menu = document.getElementById('menu');
     if (!menuBtn || !menu) return;
 
-    // Toggle menu on button click
     const toggleMenu = (e: MouseEvent) => {
       e.stopPropagation();
       menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     };
     menuBtn.addEventListener('click', toggleMenu);
 
-    // Close menu when clicking outside
     const closeMenu = (e: MouseEvent) => {
       if (menu.style.display === 'block' && !menu.contains(e.target as Node) && e.target !== menuBtn) {
         menu.style.display = 'none';
@@ -98,7 +84,6 @@ export default function Home() {
     };
     document.addEventListener('click', closeMenu);
 
-    // Close menu when clicking a link
     const links = menu.querySelectorAll('a');
     links.forEach(link => {
       link.addEventListener('click', () => {
@@ -117,329 +102,132 @@ export default function Home() {
     };
   }, []);
 
-  // Carregar times para autocomplete ao iniciar (simulado)
-  useEffect(() => {
-    setTeamList(['Real Madrid', 'Barcelona']);
-  }, []);
-
-  // Função para filtrar sugestões
-  function filterSuggestions(value: string) {
-    if (!value) return [];
-    const searchTerm = normalizeName(value);
-    const filtered = teamList.filter(name => normalizeName(name).includes(searchTerm));
-    console.log('Termo de busca:', searchTerm); // Debug
-    console.log('Times filtrados:', filtered); // Debug
-    return filtered;
-  }
-
-  // Handlers para inputs
   function handleInputA(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    console.log('Valor digitado:', value); // Debug
-    setTeamA(value);
+    setTeamA(e.target.value);
     setResult(null);
-    setTeamB('');
-    setTeamASelected(false);
-    const filtered = filterSuggestions(value);
-    setSuggestionsA(filtered);
-    setShowSuggestionsA(filtered.length > 0);
   }
 
-  function handleInputB(e: React.ChangeEvent<HTMLSelectElement>) {
-    const value = e.target.value;
-    setTeamB(value);
+  function handleInputB(e: React.ChangeEvent<HTMLInputElement>) {
+    setTeamB(e.target.value);
     setResult(null);
-    const filtered = adversaries.filter(name => normalizeName(name).includes(normalizeName(value)));
-    setSuggestionsB(filtered);
-    setShowSuggestionsB(filtered.length > 0);
   }
 
-  function handleSuggestionClickA(name: string) {
-    console.log('Time selecionado:', name); // Debug
-    setTeamA(name);
-    setSuggestionsA([]);
-    setShowSuggestionsA(false);
-    setTeamASelected(true);
-    inputARef.current?.blur();
-  }
-
-  function handleSuggestionClickB(name: string) {
-    setTeamB(name);
-    setSuggestionsB([]);
-    setShowSuggestionsB(false);
-    inputBRef.current?.blur();
-  }
-
-  // Fechar sugestões ao clicar fora
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (inputARef.current && !inputARef.current.contains(event.target as Node)) {
-        setShowSuggestionsA(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // Simular adversários
-  useEffect(() => {
-    if (teamASelected && normalizeName(teamA) === normalizeName('Real Madrid')) {
-      setAdversaries(['Barcelona']);
-    } else {
-      setAdversaries([]);
-    }
-    setTeamB('');
-    setSuggestionsB([]);
-  }, [teamA, teamASelected]);
-
-  const handleTeamSelect = (team: string) => {
-    setSelectedTeam(team);
-    setTeamList([]);
-    setShowSuggestionsA(false);
-    
-    // Simulação para Real Madrid vs Barcelona
-    if (team === 'Barcelona') {
-      setSelectedAdversary('Real Madrid');
-      setAdversaryList([]);
-      setShowAdversarySuggestions(false);
-      setTeamB('Real Madrid');
-    } else if (team === 'Real Madrid') {
-      setSelectedAdversary('Barcelona');
-      setAdversaryList([]);
-      setShowAdversarySuggestions(false);
-      setTeamB('Barcelona');
-    }
-  };
-
-  const handleAdversarySelect = (adversary: string) => {
-    setSelectedAdversary(adversary);
-    setAdversaryList([]);
-    setShowAdversarySuggestions(false);
-    setTeamB(adversary);
-  };
-
-  // Prever vencedor (simulado)
   async function predict() {
-    if (!teamA.trim() || !teamB.trim()) return;
+    if (!teamA || !teamB) return;
+    
     setLoading(true);
-    setResult(null);
-    // Simular odds
-    const oddsA = 1.80; // Real Madrid
-    const oddsB = 2.20; // Barcelona
-    const pctA = Math.round((1 / oddsA) / ((1 / oddsA) + (1 / oddsB)) * 100);
-    const pctB = 100 - pctA;
-    // Data de hoje
-    const matchDate = new Date();
-    const options: Intl.DateTimeFormatOptions = { 
-      weekday: 'long', 
-      day: 'numeric', 
-      month: 'long', 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    };
-    const formattedDate = matchDate.toLocaleDateString('pt-BR', options);
-    setResult(
-      <div style={{ marginTop: 24 }}>
-        <div style={{ marginBottom: 16, color: '#9ca3af', fontSize: 14, textAlign: 'center' }}>
-          {formattedDate}
+    try {
+      // Simulação de previsão
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setResult(
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <p>Probabilidade: 50% - 50%</p>
         </div>
-        <div style={{ marginBottom: 8, color: '#d1d5db', fontSize: 15 }}>
-          Real Madrid: <span style={{ color: 'white', fontWeight: 'bold' }}>{pctA}%</span> (odd {oddsA})
-        </div>
-        <div style={{ width: '100%', background: '#374151', borderRadius: 6, height: 12, marginBottom: 16 }}>
-          <div style={{ background: '#22c55e', height: 12, borderRadius: 6, width: `${pctA}%` }}></div>
-        </div>
-        <div style={{ marginBottom: 8, color: '#d1d5db', fontSize: 15 }}>
-          Barcelona: <span style={{ color: 'white', fontWeight: 'bold' }}>{pctB}%</span> (odd {oddsB})
-        </div>
-        <div style={{ width: '100%', background: '#374151', borderRadius: 6, height: 12 }}>
-          <div style={{ background: '#ef4444', height: 12, borderRadius: 6, width: `${pctB}%` }}></div>
-        </div>
-      </div>
-    );
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    function updateStarCenter() {
-      if (xRef.current) {
-        const rect = xRef.current.getBoundingClientRect();
-        setStarCenter({
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2
-        });
-      }
+      );
+    } catch (error) {
+      console.error('Erro ao fazer previsão:', error);
+    } finally {
+      setLoading(false);
     }
-    updateStarCenter();
-    window.addEventListener('resize', updateStarCenter);
-    return () => window.removeEventListener('resize', updateStarCenter);
-  }, []);
+  }
 
   return (
-    <div style={{
-      fontFamily: 'Consolas, monospace',
-      background: '#0B0B0B',
-      minHeight: '100vh',
-      color: 'white',
+    <main style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      textAlign: 'center',
+      height: 'calc(100vh - 200px)',
+      gap: '24px',
       position: 'relative',
-      overflow: 'hidden',
-      width: '100vw',
-      boxSizing: 'border-box'
+      zIndex: 10,
+      transform: 'scale(1)',
+      padding: '0 16px',
+      fontFamily: 'Consolas, monospace'
     }}>
-      <Stars center={starCenter} />
-      <main style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        height: 'calc(100vh - 200px)',
-        gap: '24px',
-        position: 'relative',
-        zIndex: 10,
-        transform: 'scale(1)',
-        padding: '0 16px',
-        fontFamily: 'Consolas, monospace'
+      <h1 style={{ fontSize: '24px', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace', marginBottom: 0, lineHeight: 1 }}>Antes de apostar, pergunta à UNAGI</h1>
+      <h2 style={{ 
+        fontSize: '24px', 
+        letterSpacing: '0.05em', 
+        fontFamily: 'Consolas, monospace',
+        marginBottom: '4px',
+        marginTop: 0,
+        lineHeight: 1
       }}>
-        <h1 style={{ fontSize: '24px', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace', marginBottom: 0, lineHeight: 1 }}>Antes de apostar, pergunta à UNAGI</h1>
-        <h2 style={{ 
-          fontSize: '24px', 
-          letterSpacing: '0.05em', 
-          fontFamily: 'Consolas, monospace',
-          marginBottom: '4px',
-          marginTop: 0,
-          lineHeight: 1
-        }}>
-          qualquer jogo, qualquer confronto
-        </h2>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 24, marginTop: 4 }}>
-          <div style={{ position: 'relative' }}>
-            <input
-              ref={inputARef}
-              type="text"
-              value={teamA}
-              onChange={handleInputA}
-              onFocus={() => {
-                if (teamA.length >= 3) {
-                  const filtered = filterSuggestions(teamA);
-                  setSuggestionsA(filtered);
-                  setShowSuggestionsA(true);
-                }
-              }}
-              placeholder="Time A"
-              style={{
-                width: 220,
-                height: 48,
-                background: '#18181b',
-                color: 'white',
-                border: '1px solid #333',
-                borderRadius: 8,
-                fontSize: 20,
-                padding: '0 16px',
-                outline: 'none',
-                fontFamily: 'Consolas, monospace',
-              }}
-              autoComplete="off"
-            />
-            {showSuggestionsA && suggestionsA.length > 0 && (
-              <ul style={{
-                position: 'absolute',
-                top: 52,
-                left: 0,
-                width: 220,
-                background: '#222',
-                border: '1px solid #333',
-                borderRadius: 8,
-                maxHeight: 200,
-                overflowY: 'auto',
-                zIndex: 30,
-                margin: 0,
-                padding: 0,
-                listStyle: 'none',
-              }}>
-                {suggestionsA.map(name => (
-                  <li
-                    key={name}
-                    onMouseDown={() => handleSuggestionClickA(name)}
-                    style={{
-                      padding: '10px 16px',
-                      cursor: 'pointer',
-                      color: 'white',
-                      background: name === teamA ? '#333' : 'none',
-                      fontSize: '13px',
-                      textAlign: 'left'
-                    }}
-                  >
-                    {name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div ref={xRef} style={{ fontSize: 32, fontWeight: 'bold', color: '#d1d5db', margin: '0 8px', userSelect: 'none' }}>X</div>
-          <div style={{ position: 'relative' }}>
-            <select
-              value={teamB}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setTeamB(e.target.value); setResult(null); }}
-              disabled={!teamASelected || adversaries.length === 0}
-              style={{
-                width: 220,
-                height: 48,
-                background: '#18181b',
-                color: 'white',
-                border: '1px solid #333',
-                borderRadius: 8,
-                fontSize: 20,
-                padding: '0 16px',
-                outline: 'none',
-                fontFamily: 'Consolas, monospace',
-                appearance: 'none',
-                WebkitAppearance: 'none',
-                MozAppearance: 'none',
-                cursor: !teamASelected || adversaries.length === 0 ? 'not-allowed' : 'pointer',
-              }}
-            >
-              {!teamASelected ? (
-                <option value="" disabled>Escolha o Time A</option>
-              ) : adversaries.length === 0 ? (
-                <option value="" disabled>Nenhum adversário encontrado</option>
-              ) : (
-                <option value="" disabled>Escolha o Time B</option>
-              )}
-              {adversaries.map(name => (
-                <option key={name} value={name}>{name}</option>
-              ))}
-            </select>
-          </div>
-          {/* Botão de busca */}
-          <button
-            id="predictBtn"
-            onClick={predict}
-            disabled={!teamA || !teamB}
+        qualquer jogo, qualquer confronto
+      </h2>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 24, marginTop: 4 }}>
+        <div style={{ position: 'relative' }}>
+          <input
+            ref={inputARef}
+            type="text"
+            value={teamA}
+            onChange={handleInputA}
+            placeholder="Time A"
             style={{
-              background: '#222',
+              width: 220,
+              height: 48,
+              background: '#18181b',
+              color: 'white',
               border: '1px solid #333',
               borderRadius: 8,
-              color: 'white',
-              fontSize: 24,
-              width: 56,
-              height: 56,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginLeft: 8,
-              cursor: (!teamA || !teamB) ? 'not-allowed' : 'pointer',
-              opacity: (!teamA || !teamB) ? 0.5 : 1,
+              fontSize: 20,
+              padding: '0 16px',
+              outline: 'none',
+              fontFamily: 'Consolas, monospace',
             }}
-            aria-label="Buscar odds"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
-          </button>
+            autoComplete="off"
+          />
         </div>
-        <div id="predictionResult" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-          {result}
+        <div ref={xRef} style={{ fontSize: 32, fontWeight: 'bold', color: '#d1d5db', margin: '0 8px', userSelect: 'none' }}>X</div>
+        <div style={{ position: 'relative' }}>
+          <input
+            ref={inputBRef}
+            type="text"
+            value={teamB}
+            onChange={handleInputB}
+            placeholder="Time B"
+            style={{
+              width: 220,
+              height: 48,
+              background: '#18181b',
+              color: 'white',
+              border: '1px solid #333',
+              borderRadius: 8,
+              fontSize: 20,
+              padding: '0 16px',
+              outline: 'none',
+              fontFamily: 'Consolas, monospace',
+            }}
+            autoComplete="off"
+          />
         </div>
-      </main>
-    </div>
+        <button
+          onClick={predict}
+          disabled={!teamA || !teamB || loading}
+          style={{
+            background: '#22c55e',
+            border: 'none',
+            borderRadius: 8,
+            color: 'white',
+            fontSize: 24,
+            width: 56,
+            height: 56,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginLeft: 8,
+            cursor: (!teamA || !teamB || loading) ? 'not-allowed' : 'pointer',
+            opacity: (!teamA || !teamB || loading) ? 0.5 : 1,
+          }}
+        >
+          {loading ? '...' : '→'}
+        </button>
+      </div>
+      <div id="predictionResult" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        {result}
+      </div>
+    </main>
   );
 }
