@@ -36,6 +36,21 @@ body {
   }
 }
 
+@media (max-width: 600px) {
+  input, select, button {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 4px 0 !important;
+  }
+  main {
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 0 4px !important;
+  }
+}
+
 input, select, option {
   font-family: 'Consolas', monospace !important;
   font-size: 20px !important;

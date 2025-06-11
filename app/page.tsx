@@ -166,7 +166,7 @@ export default function Home() {
             onChange={handleInputA}
             placeholder="Time A"
             style={{
-              width: 220,
+              width: '100%',
               height: 48,
               background: '#18181b',
               color: 'white',
@@ -189,7 +189,7 @@ export default function Home() {
             onChange={handleInputB}
             placeholder="Time B"
             style={{
-              width: 220,
+              width: '100%',
               height: 48,
               background: '#18181b',
               color: 'white',
