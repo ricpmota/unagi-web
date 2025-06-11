@@ -1,0 +1,75 @@
+"use client";
+import { useState } from 'react';
+
+export default function HeaderWithMenu() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  return (
+    <header style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      padding: '1.5rem 2rem 0.5rem 2rem',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      zIndex: 50,
+      background: 'rgba(0, 0, 0, 0.0)',
+      fontFamily: 'monospace',
+      pointerEvents: 'none',
+    }}>
+      <div style={{ color: '#fff', fontFamily: 'monospace', pointerEvents: 'auto' }}>
+        <div style={{ fontWeight: 'bold', fontSize: '2rem', lineHeight: 1 }}>unagi</div>
+        <div style={{ color: '#9ca3af', fontSize: '1rem', letterSpacing: 1 }}>powered by AI</div>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: 24, pointerEvents: 'auto' }}>
+        <div style={{ textAlign: 'right', fontFamily: 'monospace' }}>
+          <div style={{ color: '#fff', fontSize: '1rem', letterSpacing: 1 }}>AI omni v4</div>
+          <div style={{ color: '#9ca3af', fontSize: '1rem', letterSpacing: 1 }}>unagi.bet</div>
+        </div>
+        <div style={{ position: 'relative' }}>
+          <button
+            aria-label="Abrir menu"
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 8,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#fff',
+              fontSize: 28,
+              marginLeft: 8,
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+          {menuOpen && (
+            <div
+              style={{
+                position: 'absolute',
+                top: 40,
+                right: 0,
+                background: 'rgba(0,0,0,0.95)',
+                border: '1px solid #374151',
+                borderRadius: 8,
+                boxShadow: '0 4px 24px #000a',
+                minWidth: 180,
+                zIndex: 100,
+                fontFamily: 'monospace',
+              }}
+              onClick={e => e.stopPropagation()}
+            >
+              <a href="/" style={{ display: 'block', color: '#fff', textDecoration: 'none', padding: '12px 20px', borderBottom: '1px solid #222' }}>Home</a>
+              <a href="/statistics" style={{ display: 'block', color: '#fff', textDecoration: 'none', padding: '12px 20px', borderBottom: '1px solid #222' }}>Estatísticas</a>
+              <a href="/banking" style={{ display: 'block', color: '#fff', textDecoration: 'none', padding: '12px 20px', borderBottom: '1px solid #222' }}>Banking</a>
+              <a href="/crowdmarketing" style={{ display: 'block', color: '#fff', textDecoration: 'none', padding: '12px 20px' }}>Crowd Marketing</a>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+} 
