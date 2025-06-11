@@ -7,6 +7,12 @@
   --background-rgb: 0, 0, 0;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   font-family: monospace;
   margin: 0;
@@ -15,6 +21,8 @@ body {
   overflow: hidden;
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Responsividade */
