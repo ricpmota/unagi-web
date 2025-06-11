@@ -30,23 +30,24 @@ input, select, button {
 }
 
 @media (max-width: 800px) {
-  h1, h2 {
-    font-size: clamp(16px, 5vw, 24px) !important;
-    text-align: center !important;
+  .main-container, main {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 4px !important;
+    box-sizing: border-box !important;
+  }
+  .main-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+    width: 100% !important;
   }
   input, select, button {
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
-    font-size: clamp(14px, 4vw, 20px) !important;
-    margin: 4px 0 !important;
-    height: 44px !important;
-  }
-  main {
-    flex-direction: column !important;
-    gap: 12px !important;
-    padding: 0 4px !important;
-    align-items: stretch !important;
+    box-sizing: border-box !important;
   }
 }
 
