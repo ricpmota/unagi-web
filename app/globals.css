@@ -29,73 +29,22 @@ input, select, button {
   box-sizing: border-box;
 }
 
-@media (max-width: 800px) {
-  .main-container, main {
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 4px !important;
-    box-sizing: border-box !important;
-  }
-  .main-row {
-    flex-direction: column !important;
-    gap: 8px !important;
-    align-items: stretch !important;
-    width: 100% !important;
-  }
-  input, select, button {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-}
-
-@media (max-width: 600px) {
-  .main-container, main {
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 4px !important;
-    box-sizing: border-box !important;
-  }
-  .main-row {
-    flex-direction: column !important;
-    gap: 8px !important;
-    align-items: stretch !important;
-    width: 100% !important;
-  }
-  input, select, button {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-}
-
-@media (max-width: 1200px) {
-  .main-container, main {
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 4px !important;
-    box-sizing: border-box !important;
-  }
-  .main-row {
-    flex-direction: column !important;
-    gap: 8px !important;
-    align-items: stretch !important;
-    width: 100% !important;
-  }
-  input, select, button {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-}
-
 input, select, option {
   font-family: 'Consolas', monospace !important;
   font-size: 20px !important;
+}
+
+.central-text {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+@media (max-width: 770px), (max-height: 1000px) {
+  input, select, button {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
 } 

@@ -75,6 +75,12 @@ export default function Stars({ center }: { center?: { x: number, y: number } })
       height = window.innerHeight;
       canvas.width = width;
       canvas.height = height;
+      stars = [];
+      for (let i = 0; i < 500; i++) {
+        let star = { x: 0, y: 0, vx: 0, vy: 0, size: 1, alpha: 1 };
+        resetStar(star);
+        stars.push(star);
+      }
     };
 
     window.addEventListener("resize", handleResize);
