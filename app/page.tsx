@@ -77,12 +77,24 @@ export default function Home() {
   const [selectedAdversary, setSelectedAdversary] = useState('');
   const [adversaryList, setAdversaryList] = useState<string[]>([]);
   const [showAdversarySuggestions, setShowAdversarySuggestions] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Definir tamanhos de fonte responsivos
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 600);
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const fontSizeH1 = isMobile ? 'clamp(12.8px, 3.2vw, 19.2px)' : 'clamp(16px, 4vw, 24px)';
   const fontSizeH2 = isMobile ? 'clamp(11.2px, 2.8vw, 16px)' : 'clamp(14px, 3.5vw, 20px)';
-  const fontSizeInput = isMobile ? 12.8 : 16;
+  const fontSizeInput = 13;
+  const conjuntoMarginLeft = isMobile ? '-2mm' : '0';
+  const mainJustify = isMobile ? 'center' : 'center';
+  const mainMinHeight = isMobile ? '100vh' : '100vh';
+  const mainAlign = isMobile ? 'center' : 'center';
 
   useEffect(() => {
     const menuBtn = document.getElementById('menuBtn');
@@ -296,10 +308,10 @@ export default function Home() {
       <main style={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: mainAlign,
+        justifyContent: mainJustify,
         textAlign: 'center',
-        minHeight: '100vh',
+        minHeight: mainMinHeight,
         gap: '24px',
         position: 'relative',
         zIndex: 10,
@@ -351,6 +363,7 @@ export default function Home() {
             marginTop: 8,
             width: '100%',
             maxWidth: 600,
+            marginLeft: conjuntoMarginLeft,
           }}
         >
           <div style={{ position: 'relative', flex: 1, minWidth: 0 }}>

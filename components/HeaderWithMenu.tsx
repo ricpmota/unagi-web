@@ -1,12 +1,22 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function HeaderWithMenu() {
   const [menuOpen, setMenuOpen] = useState(false);
-  // Definir tamanhos de fonte responsivos
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 600);
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const fontSizeLogo = isMobile ? '1.6rem' : '2rem';
   const fontSizeSub = isMobile ? '0.8rem' : '1rem';
+
   return (
     <header style={{
       position: 'fixed',
