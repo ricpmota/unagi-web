@@ -82,4 +82,10 @@ input, select, option {
     align-items: center !important;
     padding: 12px 8px !important;
   }
+}
+
+@media (max-width: 600px) {
+  input, select, option {
+    font-size: 6px !important;
+  }
 } 
