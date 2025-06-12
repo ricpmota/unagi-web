@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 
-export default function HeaderWithMenu() {
+export default function HeaderWithMenu({ dark = true }: { dark?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -16,6 +16,13 @@ export default function HeaderWithMenu() {
 
   const fontSizeLogo = isMobile ? '1.6rem' : '2rem';
   const fontSizeSub = isMobile ? '0.8rem' : '1rem';
+
+  const fg = dark ? '#fff' : '#18181b';
+  const fgSub = dark ? '#9ca3af' : '#444';
+  const bgMenu = dark ? 'rgba(0,0,0,0.95)' : 'rgba(255,255,255,0.95)';
+  const borderMenu = dark ? '#374151' : '#bbb';
+  const borderItem = dark ? '#222' : '#eee';
+  const menuLink = dark ? '#fff' : '#18181b';
 
   return (
     <header style={{
@@ -32,14 +39,14 @@ export default function HeaderWithMenu() {
       fontFamily: 'monospace',
       pointerEvents: 'none',
     }}>
-      <div style={{ color: '#fff', fontFamily: 'monospace', pointerEvents: 'auto' }}>
-        <div style={{ fontWeight: 'bold', fontSize: fontSizeLogo, lineHeight: 1 }}>unagi</div>
-        <div style={{ color: '#9ca3af', fontSize: fontSizeSub, letterSpacing: 1 }}>powered by AI</div>
+      <div style={{ color: fg, fontFamily: 'monospace', pointerEvents: 'auto' }}>
+        <div style={{ fontWeight: 'bold', fontSize: fontSizeLogo, lineHeight: 1 }}>{'unagi'}</div>
+        <div style={{ color: fgSub, fontSize: fontSizeSub, letterSpacing: 1 }}>powered by AI</div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: 24, pointerEvents: 'auto' }}>
         <div style={{ textAlign: 'right', fontFamily: 'monospace' }}>
-          <div style={{ color: '#fff', fontSize: fontSizeSub, letterSpacing: 1 }}>AI omni v4</div>
-          <div style={{ color: '#9ca3af', fontSize: fontSizeSub, letterSpacing: 1 }}>unagi.bet</div>
+          <div style={{ color: fg, fontSize: fontSizeSub, letterSpacing: 1 }}>AI omni v4</div>
+          <div style={{ color: fgSub, fontSize: fontSizeSub, letterSpacing: 1 }}>unagi.bet</div>
         </div>
         <div style={{ position: 'relative' }}>
           <button
@@ -53,7 +60,7 @@ export default function HeaderWithMenu() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#fff',
+              color: fg,
               fontSize: 28,
               marginLeft: 8,
             }}
@@ -66,8 +73,8 @@ export default function HeaderWithMenu() {
                 position: 'absolute',
                 top: 40,
                 right: 0,
-                background: 'rgba(0,0,0,0.95)',
-                border: '1px solid #374151',
+                background: bgMenu,
+                border: `1px solid ${borderMenu}`,
                 borderRadius: 8,
                 boxShadow: '0 4px 24px #000a',
                 minWidth: 180,
@@ -76,10 +83,10 @@ export default function HeaderWithMenu() {
               }}
               onClick={e => e.stopPropagation()}
             >
-              <a href="/" style={{ display: 'block', color: '#fff', textDecoration: 'none', padding: '12px 20px', borderBottom: '1px solid #222' }}>Home</a>
-              <a href="/statistics" style={{ display: 'block', color: '#fff', textDecoration: 'none', padding: '12px 20px', borderBottom: '1px solid #222' }}>Estatísticas</a>
-              <a href="/banking" style={{ display: 'block', color: '#fff', textDecoration: 'none', padding: '12px 20px', borderBottom: '1px solid #222' }}>Banking</a>
-              <a href="/crowdmarketing" style={{ display: 'block', color: '#fff', textDecoration: 'none', padding: '12px 20px' }}>Crowd Marketing</a>
+              <a href="/" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px', borderBottom: `1px solid ${borderItem}` }}>Home</a>
+              <a href="/statistics" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px', borderBottom: `1px solid ${borderItem}` }}>Estatísticas</a>
+              <a href="/banking" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px', borderBottom: `1px solid ${borderItem}` }}>Banking</a>
+              <a href="/crowdmarketing" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px' }}>Crowd Marketing</a>
             </div>
           )}
         </div>

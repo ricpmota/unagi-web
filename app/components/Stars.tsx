@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-export default function Stars({ center }: { center?: { x: number, y: number } }) {
+export default function Stars({ center, dark = true }: { center?: { x: number, y: number }, dark?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -40,8 +40,7 @@ export default function Stars({ center }: { center?: { x: number, y: number } })
 
     function draw() {
       if (!ctx) return;
-      
-      ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+      ctx.fillStyle = dark ? "#000" : "#fff";
       ctx.fillRect(0, 0, width, height);
 
       ctx.save();
@@ -55,7 +54,7 @@ export default function Stars({ center }: { center?: { x: number, y: number } })
         star.alpha -= 0.003;
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+        ctx.fillStyle = dark ? `rgba(255, 255, 255, ${star.alpha})` : `rgba(0,0,0,${star.alpha})`;
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
         ctx.fill();
 
@@ -88,7 +87,7 @@ export default function Stars({ center }: { center?: { x: number, y: number } })
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [center]);
+  }, [center, dark]);
 
   return (
     <canvas

@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        <HeaderWithMenu />
+        {/* O HeaderWithMenu será controlado pelo Home via prop */}
         {children}
       </body>
     </html>

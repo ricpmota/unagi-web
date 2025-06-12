@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, JSX } from 'react';
 import Stars from './components/Stars';
+import HeaderWithMenu from '../components/HeaderWithMenu';
 
 // Função utilitária para normalizar nomes (remover acentos, caixa baixa)
 function normalizeName(name: string) {
@@ -57,6 +58,41 @@ async function fetchOddsWithCache(matchId: string) {
   return null;
 }
 
+function Switch({ checked, onChange, label, dark }: { checked: boolean, onChange: (v: boolean) => void, label: string, dark: boolean }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 8px' }}>
+      <button
+        onClick={() => onChange(!checked)}
+        style={{
+          width: 46,
+          height: 24,
+          borderRadius: 17,
+          background: checked ? '#22c55e' : '#444',
+          border: '2px solid ' + (checked ? '#22c55e' : '#444'),
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: checked ? 'flex-end' : 'flex-start',
+          padding: 2.5,
+          cursor: 'pointer',
+          transition: 'background 0.2s',
+          boxSizing: 'border-box',
+        }}
+        aria-label={label}
+      >
+        <div style={{
+          width: 18.7,
+          height: 18.7,
+          borderRadius: '50%',
+          background: '#fff',
+          boxShadow: '0 1px 4px #0006',
+          transition: 'transform 0.2s',
+        }} />
+      </button>
+      <span style={{ color: dark ? '#fff' : '#18181b', fontFamily: 'Consolas, monospace', fontSize: 17, marginTop: 2 }}>{label}</span>
+    </div>
+  );
+}
+
 export default function Home() {
   const [teamList, setTeamList] = useState<string[]>([]);
   const [teamA, setTeamA] = useState('');
@@ -78,6 +114,27 @@ export default function Home() {
   const [adversaryList, setAdversaryList] = useState<string[]>([]);
   const [showAdversarySuggestions, setShowAdversarySuggestions] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [dark, setDark] = useState(true);
+  const [universe, setUniverse] = useState(true);
+  const [sound, setSound] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Cores dinâmicas
+  const bgColor = dark ? '#0B0B0B' : '#fff';
+  const fgColor = dark ? 'white' : '#18181b';
+  const inputBg = dark ? '#18181b' : '#f3f3f3';
+  const inputColor = dark ? 'white' : '#18181b';
+  const inputBorder = dark ? '#333' : '#bbb';
+  const selectBg = inputBg;
+  const selectColor = inputColor;
+  const selectBorder = inputBorder;
+  const btnBg = dark ? '#222' : '#eee';
+  const btnColor = dark ? 'white' : '#18181b';
+  const btnBorder = dark ? '#333' : '#bbb';
+  const xColor = dark ? '#d1d5db' : '#444';
+  const suggestionBg = dark ? '#222' : '#eee';
+  const suggestionColor = dark ? 'white' : '#18181b';
+  const suggestionActiveBg = dark ? '#333' : '#ccc';
 
   useEffect(() => {
     function handleResize() {
@@ -294,18 +351,59 @@ export default function Home() {
     return () => window.removeEventListener('resize', updateStarCenter);
   }, []);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      if (sound) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    }
+  }, [sound]);
+
   return (
     <div style={{
       fontFamily: 'Consolas, monospace',
-      background: '#0B0B0B',
+      background: bgColor,
       minHeight: '100vh',
-      color: 'white',
+      color: fgColor,
       position: 'relative',
       overflow: 'hidden',
       width: '100vw',
       boxSizing: 'border-box'
     }}>
-      <Stars center={starCenter} />
+      <HeaderWithMenu dark={dark} />
+      <audio ref={audioRef} src="/music.mp3" loop />
+      {universe && <Stars center={starCenter} dark={dark} />}
+      {/* Switches - agora fora do main */}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 80,
+        marginBottom: 16,
+        gap: 2,
+        zIndex: 20,
+        position: 'relative',
+      }}>
+        <Switch checked={dark} onChange={setDark} label="dark" dark={dark} />
+        <Switch checked={universe} onChange={setUniverse} label="universe" dark={dark} />
+        <Switch checked={sound} onChange={() => {
+          setSound((prev) => {
+            if (audioRef.current) {
+              if (!prev) {
+                audioRef.current.play();
+              } else {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+              }
+            }
+            return !prev;
+          });
+        }} label="sound" dark={dark} />
+      </div>
       <main style={{
         display: 'flex',
         flexDirection: 'column',
@@ -340,7 +438,8 @@ export default function Home() {
             margin: 0,
             lineHeight: 1.2,
             padding: '0 8px',
-            textAlign: 'center'
+            textAlign: 'center',
+            color: fgColor
           }}>Antes de apostar, pergunta à UNAGI</h1>
           <h2 style={{ 
             fontSize: fontSizeH2,
@@ -349,7 +448,8 @@ export default function Home() {
             margin: 0,
             lineHeight: 1.2,
             padding: '0 8px',
-            textAlign: 'center'
+            textAlign: 'center',
+            color: fgColor
           }}>
             qualquer jogo, qualquer confronto
           </h2>
@@ -385,9 +485,9 @@ export default function Home() {
               style={{
                 width: '100%',
                 height: 44,
-                background: '#18181b',
-                color: 'white',
-                border: '1px solid #333',
+                background: inputBg,
+                color: inputColor,
+                border: `1px solid ${inputBorder}`,
                 borderRadius: 8,
                 fontSize: fontSizeInput,
                 padding: '0 10px',
@@ -404,8 +504,8 @@ export default function Home() {
                 top: 46,
                 left: 0,
                 width: '100%',
-                background: '#222',
-                border: '1px solid #333',
+                background: suggestionBg,
+                border: `1px solid ${inputBorder}`,
                 borderRadius: 8,
                 maxHeight: 200,
                 overflowY: 'auto',
@@ -421,8 +521,8 @@ export default function Home() {
                     style={{
                       padding: '8px 12px',
                       cursor: 'pointer',
-                      color: 'white',
-                      background: name === teamA ? '#333' : 'none',
+                      color: suggestionColor,
+                      background: name === teamA ? suggestionActiveBg : 'none',
                       fontSize: 13,
                       textAlign: 'left',
                     }}
@@ -433,7 +533,7 @@ export default function Home() {
               </ul>
             )}
           </div>
-          <div ref={xRef} style={{ fontSize: 24, fontWeight: 'bold', color: '#d1d5db', margin: '0 2px', userSelect: 'none', flexShrink: 0 }}>X</div>
+          <div ref={xRef} style={{ fontSize: 24, fontWeight: 'bold', color: xColor, margin: '0 2px', userSelect: 'none', flexShrink: 0 }}>X</div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <select
               value={teamB}
@@ -442,9 +542,9 @@ export default function Home() {
               style={{
                 width: '100%',
                 height: 44,
-                background: '#18181b',
-                color: 'white',
-                border: '1px solid #333',
+                background: selectBg,
+                color: selectColor,
+                border: `1px solid ${selectBorder}`,
                 borderRadius: 8,
                 fontSize: fontSizeInput,
                 padding: '0 10px',
@@ -475,10 +575,10 @@ export default function Home() {
             onClick={predict}
             disabled={!teamA || !teamB}
             style={{
-              background: '#222',
-              border: '1px solid #333',
+              background: btnBg,
+              border: `1px solid ${btnBorder}`,
               borderRadius: 8,
-              color: 'white',
+              color: btnColor,
               fontSize: 18,
               width: 40,
               height: 40,
