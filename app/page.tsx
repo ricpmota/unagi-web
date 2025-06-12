@@ -293,27 +293,57 @@ export default function Home() {
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        height: 'calc(100vh - 200px)',
+        minHeight: '100vh',
         gap: '24px',
         position: 'relative',
         zIndex: 10,
         transform: 'scale(1)',
         padding: '0 16px',
-        fontFamily: 'Consolas, monospace'
+        fontFamily: 'Consolas, monospace',
+        width: '100%',
+        maxWidth: '1200px',
+        margin: '0 auto'
       }}>
-        <h1 style={{ fontSize: '24px', letterSpacing: '0.05em', fontFamily: 'Consolas, monospace', marginBottom: 0, lineHeight: 1 }}>Antes de apostar, pergunta à UNAGI</h1>
-        <h2 style={{ 
-          fontSize: '24px', 
-          letterSpacing: '0.05em', 
-          fontFamily: 'Consolas, monospace',
-          marginBottom: '4px',
-          marginTop: 0,
-          lineHeight: 1
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '8px',
+          marginBottom: '24px'
         }}>
-          qualquer jogo, qualquer confronto
-        </h2>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 24, marginTop: 4 }}>
-          <div style={{ position: 'relative' }}>
+          <h1 style={{ 
+            fontSize: 'clamp(16px, 4vw, 24px)', 
+            letterSpacing: '0.05em', 
+            fontFamily: 'Consolas, monospace', 
+            margin: 0,
+            lineHeight: 1.2,
+            padding: '0 8px'
+          }}>Antes de apostar, pergunta à UNAGI</h1>
+          <h2 style={{ 
+            fontSize: 'clamp(14px, 3.5vw, 20px)', 
+            letterSpacing: '0.05em', 
+            fontFamily: 'Consolas, monospace',
+            margin: 0,
+            lineHeight: 1.2,
+            padding: '0 8px'
+          }}>
+            qualquer jogo, qualquer confronto
+          </h2>
+        </div>
+        
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 12,
+            marginTop: 8,
+            width: '100%',
+            maxWidth: 600,
+          }}
+        >
+          <div style={{ position: 'relative', flex: 1, minWidth: 0 }}>
             <input
               ref={inputARef}
               type="text"
@@ -328,25 +358,26 @@ export default function Home() {
               }}
               placeholder="Time A"
               style={{
-                width: 220,
-                height: 48,
+                width: '100%',
+                height: 44,
                 background: '#18181b',
                 color: 'white',
                 border: '1px solid #333',
                 borderRadius: 8,
-                fontSize: 20,
-                padding: '0 16px',
+                fontSize: 16,
+                padding: '0 10px',
                 outline: 'none',
                 fontFamily: 'Consolas, monospace',
+                boxSizing: 'border-box',
               }}
               autoComplete="off"
             />
             {showSuggestionsA && suggestionsA.length > 0 && (
               <ul style={{
                 position: 'absolute',
-                top: 52,
+                top: 46,
                 left: 0,
-                width: 220,
+                width: '100%',
                 background: '#222',
                 border: '1px solid #333',
                 borderRadius: 8,
@@ -362,12 +393,12 @@ export default function Home() {
                     key={name}
                     onMouseDown={() => handleSuggestionClickA(name)}
                     style={{
-                      padding: '10px 16px',
+                      padding: '8px 12px',
                       cursor: 'pointer',
                       color: 'white',
                       background: name === teamA ? '#333' : 'none',
-                      fontSize: '13px',
-                      textAlign: 'left'
+                      fontSize: 13,
+                      textAlign: 'left',
                     }}
                   >
                     {name}
@@ -376,27 +407,28 @@ export default function Home() {
               </ul>
             )}
           </div>
-          <div ref={xRef} style={{ fontSize: 32, fontWeight: 'bold', color: '#d1d5db', margin: '0 8px', userSelect: 'none' }}>X</div>
-          <div style={{ position: 'relative' }}>
+          <div ref={xRef} style={{ fontSize: 24, fontWeight: 'bold', color: '#d1d5db', margin: '0 6px', userSelect: 'none', flexShrink: 0 }}>X</div>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <select
               value={teamB}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setTeamB(e.target.value); setResult(null); }}
               disabled={!teamASelected || adversaries.length === 0}
               style={{
-                width: 220,
-                height: 48,
+                width: '100%',
+                height: 44,
                 background: '#18181b',
                 color: 'white',
                 border: '1px solid #333',
                 borderRadius: 8,
-                fontSize: 20,
-                padding: '0 16px',
+                fontSize: 16,
+                padding: '0 10px',
                 outline: 'none',
                 fontFamily: 'Consolas, monospace',
                 appearance: 'none',
                 WebkitAppearance: 'none',
                 MozAppearance: 'none',
                 cursor: !teamASelected || adversaries.length === 0 ? 'not-allowed' : 'pointer',
+                boxSizing: 'border-box',
               }}
             >
               {!teamASelected ? (
@@ -411,7 +443,6 @@ export default function Home() {
               ))}
             </select>
           </div>
-          {/* Botão de busca */}
           <button
             id="predictBtn"
             onClick={predict}
@@ -421,22 +452,29 @@ export default function Home() {
               border: '1px solid #333',
               borderRadius: 8,
               color: 'white',
-              fontSize: 24,
-              width: 56,
-              height: 56,
+              fontSize: 18,
+              width: 40,
+              height: 40,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              marginLeft: 8,
+              marginLeft: 6,
               cursor: (!teamA || !teamB) ? 'not-allowed' : 'pointer',
               opacity: (!teamA || !teamB) ? 0.5 : 1,
+              flexShrink: 0,
             }}
             aria-label="Buscar odds"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
           </button>
         </div>
-        <div id="predictionResult" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <div id="predictionResult" style={{ 
+          width: '100%', 
+          maxWidth: '600px',
+          display: 'flex', 
+          justifyContent: 'center',
+          padding: '0 16px'
+        }}>
           {result}
         </div>
       </main>

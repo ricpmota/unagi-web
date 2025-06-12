@@ -53,6 +53,7 @@ input, select, option {
     align-items: stretch !important;
     width: 100% !important;
   }
+  /* Removido para não quebrar layout horizontal dos campos principais
   input, select {
     width: 100% !important;
     min-width: 0 !important;
@@ -69,6 +70,7 @@ input, select, option {
     height: 56px !important;
     margin-top: 8px;
   }
+  */
   .central-text {
     max-width: 100vw;
     margin: 0 auto;
