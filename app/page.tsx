@@ -78,6 +78,12 @@ export default function Home() {
   const [adversaryList, setAdversaryList] = useState<string[]>([]);
   const [showAdversarySuggestions, setShowAdversarySuggestions] = useState(false);
 
+  // Definir tamanhos de fonte responsivos
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
+  const fontSizeH1 = isMobile ? 'clamp(12.8px, 3.2vw, 19.2px)' : 'clamp(16px, 4vw, 24px)';
+  const fontSizeH2 = isMobile ? 'clamp(11.2px, 2.8vw, 16px)' : 'clamp(14px, 3.5vw, 20px)';
+  const fontSizeInput = isMobile ? 12.8 : 16;
+
   useEffect(() => {
     const menuBtn = document.getElementById('menuBtn');
     const menu = document.getElementById('menu');
@@ -309,23 +315,27 @@ export default function Home() {
           flexDirection: 'column',
           alignItems: 'center',
           gap: '8px',
-          marginBottom: '24px'
+          marginBottom: '24px',
+          width: '100%',
+          justifyContent: 'center',
         }}>
           <h1 style={{ 
-            fontSize: 'clamp(16px, 4vw, 24px)', 
+            fontSize: fontSizeH1,
             letterSpacing: '0.05em', 
             fontFamily: 'Consolas, monospace', 
             margin: 0,
             lineHeight: 1.2,
-            padding: '0 8px'
+            padding: '0 8px',
+            textAlign: 'center'
           }}>Antes de apostar, pergunta à UNAGI</h1>
           <h2 style={{ 
-            fontSize: 'clamp(14px, 3.5vw, 20px)', 
+            fontSize: fontSizeH2,
             letterSpacing: '0.05em', 
             fontFamily: 'Consolas, monospace',
             margin: 0,
             lineHeight: 1.2,
-            padding: '0 8px'
+            padding: '0 8px',
+            textAlign: 'center'
           }}>
             qualquer jogo, qualquer confronto
           </h2>
@@ -337,7 +347,7 @@ export default function Home() {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 12,
+            gap: 8,
             marginTop: 8,
             width: '100%',
             maxWidth: 600,
@@ -364,7 +374,7 @@ export default function Home() {
                 color: 'white',
                 border: '1px solid #333',
                 borderRadius: 8,
-                fontSize: 16,
+                fontSize: fontSizeInput,
                 padding: '0 10px',
                 outline: 'none',
                 fontFamily: 'Consolas, monospace',
@@ -407,7 +417,7 @@ export default function Home() {
               </ul>
             )}
           </div>
-          <div ref={xRef} style={{ fontSize: 24, fontWeight: 'bold', color: '#d1d5db', margin: '0 6px', userSelect: 'none', flexShrink: 0 }}>X</div>
+          <div ref={xRef} style={{ fontSize: 24, fontWeight: 'bold', color: '#d1d5db', margin: '0 2px', userSelect: 'none', flexShrink: 0 }}>X</div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <select
               value={teamB}
@@ -420,7 +430,7 @@ export default function Home() {
                 color: 'white',
                 border: '1px solid #333',
                 borderRadius: 8,
-                fontSize: 16,
+                fontSize: fontSizeInput,
                 padding: '0 10px',
                 outline: 'none',
                 fontFamily: 'Consolas, monospace',
@@ -458,7 +468,7 @@ export default function Home() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              marginLeft: 6,
+              marginLeft: 2,
               cursor: (!teamA || !teamB) ? 'not-allowed' : 'pointer',
               opacity: (!teamA || !teamB) ? 0.5 : 1,
               flexShrink: 0,

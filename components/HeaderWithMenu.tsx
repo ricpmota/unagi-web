@@ -3,6 +3,10 @@ import { useState } from 'react';
 
 export default function HeaderWithMenu() {
   const [menuOpen, setMenuOpen] = useState(false);
+  // Definir tamanhos de fonte responsivos
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
+  const fontSizeLogo = isMobile ? '1.6rem' : '2rem';
+  const fontSizeSub = isMobile ? '0.8rem' : '1rem';
   return (
     <header style={{
       position: 'fixed',
@@ -19,13 +23,13 @@ export default function HeaderWithMenu() {
       pointerEvents: 'none',
     }}>
       <div style={{ color: '#fff', fontFamily: 'monospace', pointerEvents: 'auto' }}>
-        <div style={{ fontWeight: 'bold', fontSize: '2rem', lineHeight: 1 }}>unagi</div>
-        <div style={{ color: '#9ca3af', fontSize: '1rem', letterSpacing: 1 }}>powered by AI</div>
+        <div style={{ fontWeight: 'bold', fontSize: fontSizeLogo, lineHeight: 1 }}>unagi</div>
+        <div style={{ color: '#9ca3af', fontSize: fontSizeSub, letterSpacing: 1 }}>powered by AI</div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: 24, pointerEvents: 'auto' }}>
         <div style={{ textAlign: 'right', fontFamily: 'monospace' }}>
-          <div style={{ color: '#fff', fontSize: '1rem', letterSpacing: 1 }}>AI omni v4</div>
-          <div style={{ color: '#9ca3af', fontSize: '1rem', letterSpacing: 1 }}>unagi.bet</div>
+          <div style={{ color: '#fff', fontSize: fontSizeSub, letterSpacing: 1 }}>AI omni v4</div>
+          <div style={{ color: '#9ca3af', fontSize: fontSizeSub, letterSpacing: 1 }}>unagi.bet</div>
         </div>
         <div style={{ position: 'relative' }}>
           <button
