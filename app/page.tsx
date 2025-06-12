@@ -88,7 +88,7 @@ function Switch({ checked, onChange, label, dark }: { checked: boolean, onChange
           transition: 'transform 0.2s',
         }} />
       </button>
-      <span style={{ color: dark ? '#fff' : '#18181b', fontFamily: 'Consolas, monospace', fontSize: 17, marginTop: 2 }}>{label}</span>
+      <span style={{ color: dark ? '#fff' : '#18181b', fontFamily: 'Consolas, monospace', fontSize: 12, marginTop: 2 }}>{label}</span>
     </div>
   );
 }
@@ -137,7 +137,7 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [dark, setDark] = useState(true);
   const [universe, setUniverse] = useState(true);
-  const [sound, setSound] = useState(true);
+  const [sound, setSound] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [translate, setTranslate] = useState(false);
   const userLang = typeof window !== 'undefined' ? navigator.language.slice(0, 2) : 'en';
@@ -174,7 +174,7 @@ export default function Home() {
   const fontSizeH2 = isMobile ? 'clamp(11.2px, 2.8vw, 16px)' : 'clamp(14px, 3.5vw, 20px)';
   const fontSizeInput = isMobile ? '10px' : '13px';
   const textoCentralMarginLeft = isMobile ? '-8mm' : '0';
-  const conjuntoMarginLeft = isMobile ? '-4mm' : '0';
+  const conjuntoMarginLeft = isMobile ? '-1mm' : '0';
   const mainJustify = isMobile ? 'center' : 'center';
   const mainMinHeight = isMobile ? '100vh' : '100vh';
   const mainAlign = isMobile ? 'center' : 'center';
