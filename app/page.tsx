@@ -90,8 +90,9 @@ export default function Home() {
 
   const fontSizeH1 = isMobile ? 'clamp(12.8px, 3.2vw, 19.2px)' : 'clamp(16px, 4vw, 24px)';
   const fontSizeH2 = isMobile ? 'clamp(11.2px, 2.8vw, 16px)' : 'clamp(14px, 3.5vw, 20px)';
-  const fontSizeInput = 13;
-  const conjuntoMarginLeft = isMobile ? '-2mm' : '0';
+  const fontSizeInput = 10;
+  const textoCentralMarginLeft = isMobile ? '-8mm' : '0';
+  const conjuntoMarginLeft = isMobile ? '-4mm' : '0';
   const mainJustify = isMobile ? 'center' : 'center';
   const mainMinHeight = isMobile ? '100vh' : '100vh';
   const mainAlign = isMobile ? 'center' : 'center';
@@ -330,6 +331,7 @@ export default function Home() {
           marginBottom: '24px',
           width: '100%',
           justifyContent: 'center',
+          marginLeft: textoCentralMarginLeft,
         }}>
           <h1 style={{ 
             fontSize: fontSizeH1,
