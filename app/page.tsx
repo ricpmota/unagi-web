@@ -172,9 +172,9 @@ export default function Home() {
 
   const fontSizeH1 = isMobile ? 'clamp(12.8px, 3.2vw, 19.2px)' : 'clamp(16px, 4vw, 24px)';
   const fontSizeH2 = isMobile ? 'clamp(11.2px, 2.8vw, 16px)' : 'clamp(14px, 3.5vw, 20px)';
-  const fontSizeInput = isMobile ? '10px' : '13px';
+  const fontSizeInput = isMobile ? '12px' : '13px';
   const textoCentralMarginLeft = isMobile ? '2mm' : '0';
-  const conjuntoMarginLeft = isMobile ? '1mm' : '0';
+  const conjuntoMarginLeft = isMobile ? '3mm' : '0';
   const mainJustify = isMobile ? 'center' : 'center';
   const mainMinHeight = isMobile ? '100vh' : '100vh';
   const mainAlign = isMobile ? 'center' : 'center';
