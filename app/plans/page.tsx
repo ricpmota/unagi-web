@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { useTranslation } from '../../contexts/TranslationContext';
+import HeaderWithMenu from '../../components/HeaderWithMenu';
 
 const benefits = {
   en: [
@@ -26,13 +27,13 @@ export default function Plans() {
   const animating = useRef(false);
   const { translate, setTranslate, lang } = useTranslation();
 
-  // Função para animar o preço (mais lenta)
-  function animatePrice(target: number, nextAnnual: boolean) {
+  // Função para animar o preço (mais rápida)
+  function animatePrice(target: number) {
     if (animating.current) return;
     animating.current = true;
     const start = displayPrice;
     const end = target;
-    const duration = 1200; // ms (mais lento)
+    const duration = 840; // ms (30% mais rápido que 1200ms)
     const steps = 60;
     let currentStep = 0;
     function step() {
@@ -45,20 +46,28 @@ export default function Plans() {
       } else {
         setDisplayPrice(Number(end.toFixed(2)));
         animating.current = false;
-        setAnnual(nextAnnual);
-        setPendingAnnual(false);
       }
     }
     step();
   }
 
   function handleSwitch(val: boolean) {
-    setPendingAnnual(val);
-    animatePrice(val ? 49.99 : 4.99, val);
+    setAnnual(val); // Troca instantânea
+    animatePrice(val ? 49.99 : 4.99);
   }
 
   const period = annual ? (lang === 'en' ? 'year' : 'ano') : (lang === 'en' ? 'month' : 'mês');
   const subscribeText = lang === 'en' ? 'Subscribe now' : 'Assine agora';
+
+  // Responsividade para container
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
+  const cardMaxWidth = isMobile ? 320 : 400;
+  const cardPadding = isMobile ? 20 : 32;
+  // Largura do switch maior
+  const switchWidth = isMobile ? 136 : 160;
+  const switchBtnWidth = isMobile ? 80 : 90; // indicador maior que o texto
+  const extraOffset = 19; // 5mm em px
+  const switchBtnOffset = (switchWidth / 2 - switchBtnWidth) / 2 + 3;
 
   // Switch visual igual ao site, mas sincronizado com a animação do preço
   function Switch({ checked, onChange, label, disabled }: { checked: boolean, onChange: (v: boolean) => void, label: string, disabled?: boolean }) {
@@ -109,7 +118,9 @@ export default function Plans() {
       justifyContent: 'flex-start',
       fontFamily: 'Consolas, monospace',
       padding: 16,
+      position: 'relative',
     }}>
+      <HeaderWithMenu dark={true} />
       {/* Logo fora do card, centralizada, 5x5cm (aprox 189x189px) */}
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: 24, marginBottom: 16 }}>
         <Image src="/logo.png" alt="logo" width={189} height={189} style={{ objectFit: 'contain', width: '5cm', height: '5cm' }} />
@@ -119,8 +130,8 @@ export default function Plans() {
         border: '2px solid #22c55e',
         borderRadius: 14,
         boxShadow: '0 0 24px #000a',
-        padding: 32,
-        maxWidth: 400,
+        padding: cardPadding,
+        maxWidth: cardMaxWidth,
         width: '100%',
         textAlign: 'center',
       }}>
@@ -145,21 +156,20 @@ export default function Plans() {
               border: 'none',
               borderRadius: 20,
               display: 'flex',
-              width: 140,
-              height: 36,
+              width: switchWidth,
+              height: 40,
               position: 'relative',
-              cursor: pendingAnnual ? 'not-allowed' : 'pointer',
+              cursor: 'pointer',
               userSelect: 'none',
-              opacity: pendingAnnual ? 0.6 : 1,
             }}
-            onClick={() => !pendingAnnual && handleSwitch(!annual)}
+            onClick={() => handleSwitch(!annual)}
           >
             <div
               style={{
                 position: 'absolute',
-                top: 3,
-                left: (annual || pendingAnnual) ? 70 : 3,
-                width: 64,
+                top: 5,
+                left: annual ? (switchWidth / 2 + switchBtnOffset + extraOffset) : switchBtnOffset,
+                width: switchBtnWidth,
                 height: 30,
                 background: '#22c55e',
                 borderRadius: 16,
@@ -176,7 +186,7 @@ export default function Plans() {
                 justifyContent: 'center',
                 color: !(annual || pendingAnnual) ? '#101010' : '#22c55e',
                 fontWeight: 'bold',
-                fontSize: 15,
+                fontSize: 17,
                 transition: 'color 0.2s',
               }}
             >
@@ -191,7 +201,7 @@ export default function Plans() {
                 justifyContent: 'center',
                 color: (annual || pendingAnnual) ? '#101010' : '#22c55e',
                 fontWeight: 'bold',
-                fontSize: 15,
+                fontSize: 17,
                 transition: 'color 0.2s',
               }}
             >
