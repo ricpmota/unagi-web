@@ -61,12 +61,19 @@ export default function Plans() {
 
   // Responsividade para container
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
-  const cardMaxWidth = isMobile ? 320 : 400;
-  const cardPadding = isMobile ? 20 : 32;
-  // Largura do switch maior
-  const switchWidth = isMobile ? 136 : 160;
-  const switchBtnWidth = isMobile ? 80 : 90; // indicador maior que o texto
-  const extraOffset = 19; // 5mm em px
+  const cardMaxWidth = isMobile ? 256 : 320;
+  const cardPadding = isMobile ? 16 : 26;
+  // Largura dinâmica baseada no texto selecionado
+  const monthlyLabel = lang === 'en' ? 'Monthly' : 'Mensal';
+  const annualLabel = lang === 'en' ? 'Annual' : 'Anual';
+  // Estimar largura do texto + padding
+  const getTextWidth = (text: string) => (text.length * 10 + 24); // 10px por letra + 24px de padding
+  const monthlyWidth = getTextWidth(monthlyLabel);
+  const annualWidth = getTextWidth(annualLabel);
+  const switchWidth = monthlyWidth + annualWidth;
+  const switchBtnWidth = annual ? annualWidth : monthlyWidth;
+  const switchBtnLeft = annual ? monthlyWidth : 0;
+  const extraOffset = 10;
   const switchBtnOffset = (switchWidth / 2 - switchBtnWidth) / 2 + 3;
 
   // Switch visual igual ao site, mas sincronizado com a animação do preço
@@ -161,6 +168,7 @@ export default function Plans() {
               position: 'relative',
               cursor: 'pointer',
               userSelect: 'none',
+              alignItems: 'center',
             }}
             onClick={() => handleSwitch(!annual)}
           >
@@ -168,44 +176,44 @@ export default function Plans() {
               style={{
                 position: 'absolute',
                 top: 5,
-                left: annual ? (switchWidth / 2 + switchBtnOffset + extraOffset) : switchBtnOffset,
+                left: switchBtnLeft,
                 width: switchBtnWidth,
                 height: 30,
                 background: '#22c55e',
                 borderRadius: 16,
-                transition: 'left 0.4s cubic-bezier(.4,2,.6,1)',
+                transition: 'left 0.4s cubic-bezier(.4,2,.6,1), width 0.4s cubic-bezier(.4,2,.6,1)',
                 zIndex: 1,
               }}
             />
             <div
               style={{
-                flex: 1,
+                width: monthlyWidth,
                 zIndex: 2,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: !(annual || pendingAnnual) ? '#101010' : '#22c55e',
+                color: !annual ? '#101010' : '#22c55e',
                 fontWeight: 'bold',
                 fontSize: 17,
                 transition: 'color 0.2s',
               }}
             >
-              {lang === 'en' ? 'Monthly' : 'Mensal'}
+              {monthlyLabel}
             </div>
             <div
               style={{
-                flex: 1,
+                width: annualWidth,
                 zIndex: 2,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: (annual || pendingAnnual) ? '#101010' : '#22c55e',
+                color: annual ? '#101010' : '#22c55e',
                 fontWeight: 'bold',
                 fontSize: 17,
                 transition: 'color 0.2s',
               }}
             >
-              {lang === 'en' ? 'Annual' : 'Anual'}
+              {annualLabel}
             </div>
           </div>
         </div>
