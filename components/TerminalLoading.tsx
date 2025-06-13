@@ -87,7 +87,7 @@ export default function TerminalLoading({ onDone }: { onDone: (duration: number)
         overflow: 'hidden',
       }}>
         <div style={{ padding: '12px 18px 0 18px', fontSize: 15, minHeight: 30 }}>
-          <span style={{ color: '#fff' }}>// loading{dots}</span>
+          <span style={{ color: '#fff' }}>{done ? '// complete.' : `// loading${dots}`}</span>
         </div>
         <div style={{ padding: '0 18px', fontSize: 13, color: '#22c55e', minHeight: 24 }}>
           {status}
@@ -116,9 +116,6 @@ export default function TerminalLoading({ onDone }: { onDone: (duration: number)
         </div>
         <div style={{ padding: '0 18px', fontSize: 13, color: '#22c55e', minHeight: 24, marginTop: 8 }}>
           {!done ? '' : `${duration.toFixed(3)}seg`}
-        </div>
-        <div style={{ marginTop: 8, color: '#22c55e', fontSize: 12 }}>
-          {done ? 'Complete' : 'Loading'}...
         </div>
         {done && (
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
