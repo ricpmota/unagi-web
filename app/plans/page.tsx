@@ -4,10 +4,11 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import { useTranslation } from '../../contexts/TranslationContext';
 import HeaderWithMenu from '../../components/HeaderWithMenu';
+import { CheckCircle } from 'lucide-react';
 
 const benefits = {
   en: [
-    'Unlimited deepresults analysis',
+    'Unlimited deepresults',
     '5 deepresults APIs',
     'Context memory',
     'Omni v4 model',
@@ -234,6 +235,10 @@ export default function Plans() {
           {benefits[lang].map((b, i) => (
             <li key={i} style={{ marginBottom: 10 }}>• {b}</li>
           ))}
+          <li className="flex items-center gap-2">
+            <CheckCircle className="text-green-500" size={20} />
+            <span>{lang === 'en' ? 'Unlimited deepresults' : 'Unlimited deepresults'}</span>
+          </li>
         </ul>
         <button
           style={{

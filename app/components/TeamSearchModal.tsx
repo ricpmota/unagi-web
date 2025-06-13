@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from '../../contexts/TranslationContext';
 
 interface TeamSearchModalProps {
   open: boolean;
@@ -9,26 +10,27 @@ interface TeamSearchModalProps {
 }
 
 export default function TeamSearchModal({ open, onClose, teamList, onSelect, dark = true }: TeamSearchModalProps) {
-  const [search, setSearch] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [filtered, setFiltered] = useState<string[]>(teamList);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (open) {
-      setSearch('');
+      setSearchTerm('');
       setFiltered(teamList);
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [open, teamList]);
 
   useEffect(() => {
-    const term = search.trim().toLowerCase();
+    const term = searchTerm.trim().toLowerCase();
     setFiltered(
       term.length === 0
         ? []
         : teamList.filter(t => t.toLowerCase().includes(term))
     );
-  }, [search, teamList]);
+  }, [searchTerm, teamList]);
 
   if (!open) return null;
 
@@ -63,25 +65,28 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
         <input
           ref={inputRef}
           type="text"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Digite o nome do time..."
+          className="w-full bg-transparent border-none outline-none text-base"
           style={{
             width: '100%',
-            padding: 10,
-            borderRadius: 8,
+            padding: '10px',
+            borderRadius: '8px',
             border: '1px solid #333',
             background: dark ? '#222' : '#eee',
             color: dark ? '#fff' : '#18181b',
-            fontSize: 16,
-            marginBottom: 12,
+            fontSize: '16px',
+            marginBottom: '12px',
             outline: 'none',
             fontFamily: 'Consolas, monospace',
             WebkitTextSizeAdjust: '100%',
+            WebkitAppearance: 'none',
+            appearance: 'none'
           }}
         />
         <div style={{ width: '100%', maxHeight: 180, overflowY: 'auto', borderRadius: 8, background: dark ? '#222' : '#eee', border: '1px solid #333' }}>
-          {search.trim().length === 0 ? (
+          {searchTerm.trim().length === 0 ? (
             <div style={{ padding: 16, textAlign: 'center', color: '#aaa', fontSize: 14 }}>Digite para buscar</div>
           ) : filtered.length === 0 ? (
             <div style={{ padding: 16, textAlign: 'center', color: '#aaa', fontSize: 14 }}>Nenhum time encontrado</div>
