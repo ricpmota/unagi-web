@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef, JSX } from 'react';
 import Stars from './components/Stars';
 import HeaderWithMenu from '../components/HeaderWithMenu';
+import TerminalLoading from '../components/TerminalLoading';
 
 // Função utilitária para normalizar nomes (remover acentos, caixa baixa)
 function normalizeName(name: string) {
@@ -143,6 +144,8 @@ export default function Home() {
   const userLang = typeof window !== 'undefined' ? navigator.language.slice(0, 2) : 'en';
   const lang = translate ? (userLang === 'pt' ? 'pt' : 'en') : 'en';
   const t = translations[lang as 'en' | 'pt'];
+  const [showTerminal, setShowTerminal] = useState(false);
+  const [pendingPredict, setPendingPredict] = useState<null | (() => void)>(null);
 
   // Cores dinâmicas
   const bgColor = dark ? '#0B0B0B' : '#fff';
@@ -322,43 +325,54 @@ export default function Home() {
   // Prever vencedor (simulado)
   async function predict() {
     if (!teamA.trim() || !teamB.trim()) return;
-    setLoading(true);
-    setResult(null);
-    // Simular odds
-    const oddsA = 1.80; // Real Madrid
-    const oddsB = 2.20; // Barcelona
-    const pctA = Math.round((1 / oddsA) / ((1 / oddsA) + (1 / oddsB)) * 100);
-    const pctB = 100 - pctA;
-    // Data de hoje
-    const matchDate = new Date();
-    const options: Intl.DateTimeFormatOptions = { 
-      weekday: 'long', 
-      day: 'numeric', 
-      month: 'long', 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    };
-    const formattedDate = matchDate.toLocaleDateString('pt-BR', options);
-    setResult(
-      <div style={{ marginTop: 24 }}>
-        <div style={{ marginBottom: 16, color: '#9ca3af', fontSize: 14, textAlign: 'center' }}>
-          {formattedDate}
+    setShowTerminal(true);
+    setPendingPredict(() => async () => {
+      setLoading(true);
+      setResult(null);
+      // Simular odds
+      const oddsA = 1.80; // Real Madrid
+      const oddsB = 2.20; // Barcelona
+      const pctA = Math.round((1 / oddsA) / ((1 / oddsA) + (1 / oddsB)) * 100);
+      const pctB = 100 - pctA;
+      // Data de hoje
+      const matchDate = new Date();
+      const options: Intl.DateTimeFormatOptions = { 
+        weekday: 'long', 
+        day: 'numeric', 
+        month: 'long', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      };
+      const formattedDate = matchDate.toLocaleDateString('pt-BR', options);
+      setResult(
+        <div style={{ marginTop: 24, color: dark ? undefined : '#18181b' }}>
+          <div style={{ marginBottom: 16, color: dark ? '#9ca3af' : '#444', fontSize: 14, textAlign: 'center' }}>
+            {formattedDate}
+          </div>
+          <div style={{ marginBottom: 8, color: dark ? '#d1d5db' : '#18181b', fontSize: 15 }}>
+            Real Madrid: <span style={{ color: dark ? 'white' : '#18181b', fontWeight: 'bold' }}>{pctA}%</span> (odd {oddsA})
+          </div>
+          <div style={{ width: '100%', background: dark ? '#374151' : '#bbb', borderRadius: 6, height: 12, marginBottom: 16 }}>
+            <div style={{ background: '#22c55e', height: 12, borderRadius: 6, width: `${pctA}%` }}></div>
+          </div>
+          <div style={{ marginBottom: 8, color: dark ? '#d1d5db' : '#18181b', fontSize: 15 }}>
+            Barcelona: <span style={{ color: dark ? 'white' : '#18181b', fontWeight: 'bold' }}>{pctB}%</span> (odd {oddsB})
+          </div>
+          <div style={{ width: '100%', background: dark ? '#374151' : '#bbb', borderRadius: 6, height: 12 }}>
+            <div style={{ background: '#ef4444', height: 12, borderRadius: 6, width: `${pctB}%` }}></div>
+          </div>
         </div>
-        <div style={{ marginBottom: 8, color: '#d1d5db', fontSize: 15 }}>
-          Real Madrid: <span style={{ color: 'white', fontWeight: 'bold' }}>{pctA}%</span> (odd {oddsA})
-        </div>
-        <div style={{ width: '100%', background: '#374151', borderRadius: 6, height: 12, marginBottom: 16 }}>
-          <div style={{ background: '#22c55e', height: 12, borderRadius: 6, width: `${pctA}%` }}></div>
-        </div>
-        <div style={{ marginBottom: 8, color: '#d1d5db', fontSize: 15 }}>
-          Barcelona: <span style={{ color: 'white', fontWeight: 'bold' }}>{pctB}%</span> (odd {oddsB})
-        </div>
-        <div style={{ width: '100%', background: '#374151', borderRadius: 6, height: 12 }}>
-          <div style={{ background: '#ef4444', height: 12, borderRadius: 6, width: `${pctB}%` }}></div>
-        </div>
-      </div>
-    );
-    setLoading(false);
+      );
+      setLoading(false);
+    });
+  }
+
+  function handleTerminalDone() {
+    setShowTerminal(false);
+    if (pendingPredict) {
+      pendingPredict();
+      setPendingPredict(null);
+    }
   }
 
   useEffect(() => {
@@ -638,6 +652,7 @@ export default function Home() {
           </div>
         </main>
       </div>
+      {showTerminal && <TerminalLoading onDone={handleTerminalDone} />}
     </div>
   );
 }

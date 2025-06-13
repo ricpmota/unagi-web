@@ -71,7 +71,7 @@ export default function LoginPage() {
     <div style={{
       minHeight: '100vh',
       background: '#0B0B0B',
-      color: 'white',
+      color: '#fff',
       fontFamily: 'Consolas, monospace',
       display: 'flex',
       flexDirection: 'column',
@@ -82,11 +82,11 @@ export default function LoginPage() {
       <div style={{
         marginTop: 120,
         width: '100%',
-        maxWidth: isMobile ? 168 : 400,
+        maxWidth: isMobile ? 202 : 400,
         background: '#18181b',
         borderRadius: 16,
         boxShadow: '0 4px 24px #000a',
-        padding: isMobile ? 16 : 32,
+        padding: isMobile ? 19 : 32,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -215,13 +215,13 @@ export default function LoginPage() {
             background: 'none',
             border: 'none',
             color: '#22c55e',
-            fontSize: isMobile ? 10 : 15,
+            fontSize: 12,
             marginTop: 6,
             cursor: 'pointer',
             textDecoration: 'underline',
           }}
         >
-          {isRegister ? 'Já tem conta? Faça login' : 'Não tem conta? Cadastre-se'}
+          {isRegister ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
         </button>
         )}
       </div>
