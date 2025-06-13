@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef, JSX } from 'react';
 import Stars from './components/Stars';
 import HeaderWithMenu from '../components/HeaderWithMenu';
 import TerminalLoading from '../components/TerminalLoading';
-import LoginModal from '../components/LoginModal';
+import LoginModal from './login/LoginModal';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../contexts/TranslationContext';
 
