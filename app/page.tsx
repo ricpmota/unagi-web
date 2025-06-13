@@ -599,9 +599,19 @@ export default function Home() {
                   setResult(null);
                   // Reset zoom when team B is selected
                   if (e.target.value) {
+                    // Reset zoom using multiple approaches for better iOS compatibility
                     document.body.style.zoom = "100%";
                     document.body.style.transform = "scale(1)";
                     document.body.style.transformOrigin = "0 0";
+                    // Force a reflow
+                    document.body.style.display = "none";
+                    document.body.offsetHeight; // Force reflow
+                    document.body.style.display = "";
+                    // Add a small delay and try again
+                    setTimeout(() => {
+                      document.body.style.zoom = "100%";
+                      document.body.style.transform = "scale(1)";
+                    }, 100);
                   }
                 }}
                 disabled={!teamASelected || adversaries.length === 0}

@@ -128,7 +128,7 @@ export default function TerminalLoading({ onDone }: { onDone: (duration: number)
                 borderRadius: 6,
                 fontWeight: 'bold',
                 fontFamily: 'Consolas, monospace',
-                fontSize: 10,
+                fontSize: window.innerWidth <= 600 ? '12px' : '14px',
                 padding: '6px 24px',
                 cursor: 'pointer',
                 boxShadow: '0 2px 8px #0006',
