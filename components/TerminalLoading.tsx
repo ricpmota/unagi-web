@@ -87,7 +87,7 @@ export default function TerminalLoading({ onDone }: { onDone: (duration: number)
         overflow: 'hidden',
       }}>
         <div style={{ padding: '12px 18px 0 18px', fontSize: 15, minHeight: 30 }}>
-          <span style={{ color: '#fff' }}>{done ? '// complete.' : `// loading${dots}`}</span>
+          <span style={{ color: '#fff' }}>{done ? '// complete.' : '// analyzing...'}</span>
         </div>
         <div style={{ padding: '0 18px', fontSize: 13, color: '#22c55e', minHeight: 24 }}>
           {status}
@@ -115,7 +115,7 @@ export default function TerminalLoading({ onDone }: { onDone: (duration: number)
           </div>
         </div>
         <div style={{ padding: '0 18px', fontSize: 13, color: '#22c55e', minHeight: 24, marginTop: 8 }}>
-          {!done ? '' : `${duration.toFixed(3)}seg`}
+          {elapsed.toFixed(3)}seg
         </div>
         {done && (
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
@@ -128,10 +128,11 @@ export default function TerminalLoading({ onDone }: { onDone: (duration: number)
                 borderRadius: 6,
                 fontWeight: 'bold',
                 fontFamily: 'Consolas, monospace',
-                fontSize: window.innerWidth <= 600 ? '12px' : '14px',
-                padding: '6px 24px',
+                fontSize: window.innerWidth <= 600 ? '10px' : '14px',
+                padding: window.innerWidth <= 600 ? '4px 14px' : '6px 24px',
                 cursor: 'pointer',
                 boxShadow: '0 2px 8px #0006',
+                marginBottom: window.innerWidth <= 600 ? '2mm' : undefined,
               }}
             >
               unagi results
