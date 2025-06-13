@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import HeaderWithMenu from '../components/HeaderWithMenu'
+import { AuthProvider } from '../contexts/AuthContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        {/* O HeaderWithMenu será controlado pelo Home via prop */}
-        {children}
+        <AuthProvider>
+          {/* O HeaderWithMenu será controlado pelo Home via prop */}
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )
