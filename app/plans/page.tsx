@@ -68,8 +68,8 @@ export default function Plans() {
   const subscribeText = lang === 'en' ? 'Subscribe now' : 'Assine agora';
 
   // Responsividade para container
-  const cardMaxWidth = isMobile ? 256 : 320;
-  const cardPadding = isMobile ? 16 : 26;
+  const cardMaxWidth = isMobile ? Math.round(256 * 1.1) : Math.round(320 * 1.1); // 10% maior
+  const cardPadding = isMobile ? Math.round(16 * 1.1) : Math.round(26 * 1.1);
   // Largura dinâmica baseada no texto selecionado
   const monthlyLabel = lang === 'en' ? 'Monthly' : 'Mensal';
   const annualLabel = lang === 'en' ? 'Annual' : 'Anual';

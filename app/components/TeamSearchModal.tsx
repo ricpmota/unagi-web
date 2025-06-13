@@ -73,10 +73,11 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
             border: '1px solid #333',
             background: dark ? '#222' : '#eee',
             color: dark ? '#fff' : '#18181b',
-            fontSize: 15,
+            fontSize: 16,
             marginBottom: 12,
             outline: 'none',
             fontFamily: 'Consolas, monospace',
+            WebkitTextSizeAdjust: '100%',
           }}
         />
         <div style={{ width: '100%', maxHeight: 180, overflowY: 'auto', borderRadius: 8, background: dark ? '#222' : '#eee', border: '1px solid #333' }}>
