@@ -594,7 +594,16 @@ export default function Home() {
             <div style={{ flex: 1, minWidth: 0 }}>
               <select
                 value={teamB}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { setTeamB(e.target.value); setResult(null); }}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { 
+                  setTeamB(e.target.value); 
+                  setResult(null);
+                  // Reset zoom when team B is selected
+                  if (e.target.value) {
+                    document.body.style.zoom = "100%";
+                    document.body.style.transform = "scale(1)";
+                    document.body.style.transformOrigin = "0 0";
+                  }
+                }}
                 disabled={!teamASelected || adversaries.length === 0}
                 style={{
                   width: '100%',
