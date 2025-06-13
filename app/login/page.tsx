@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import HeaderWithMenu from '../../components/HeaderWithMenu';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
@@ -14,7 +14,17 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,81 +82,126 @@ export default function LoginPage() {
       <div style={{
         marginTop: 120,
         width: '100%',
-        maxWidth: 400,
+        maxWidth: isMobile ? 168 : 400,
         background: '#18181b',
         borderRadius: 16,
         boxShadow: '0 4px 24px #000a',
-        padding: 32,
+        padding: isMobile ? 16 : 32,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-        <h1 style={{ fontSize: 28, fontWeight: 'bold', marginBottom: 24, letterSpacing: 1 }}> {isRegister ? 'Cadastro' : 'Login'} </h1>
+        <h1 style={{ 
+          fontSize: isMobile ? 18 : 28, 
+          fontWeight: 'bold', 
+          marginBottom: isMobile ? 14 : 24, 
+          letterSpacing: 1 
+        }}> {isRegister ? 'Cadastro' : 'Login'} </h1>
         {emailSent ? (
-          <div style={{ color: '#22c55e', fontSize: 16, textAlign: 'center', marginBottom: 16 }}>
+          <div style={{ 
+            color: '#22c55e', 
+            fontSize: isMobile ? 11 : 16, 
+            textAlign: 'center', 
+            marginBottom: 12 
+          }}>
             Um link de verificação foi enviado para seu e-mail.<br />
             Por favor, verifique sua caixa de entrada e clique no link para ativar sua conta.<br />
             Após a verificação, faça login normalmente.<br />
             <button
               onClick={() => { setIsRegister(false); setEmailSent(false); setEmail(''); setPassword(''); }}
-              style={{ marginTop: 16, color: '#22c55e', background: 'none', border: 'none', fontSize: 15, cursor: 'pointer', textDecoration: 'underline' }}
+              style={{ 
+                marginTop: 12, 
+                color: '#22c55e', 
+                background: 'none', 
+                border: 'none', 
+                fontSize: isMobile ? 11 : 15, 
+                cursor: 'pointer', 
+                textDecoration: 'underline' 
+              }}
             >Voltar para login</button>
           </div>
         ) : (
-        <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: isMobile ? 12 : 16 }}>
           {isRegister && (
             <div>
-              <label htmlFor="name" style={{ fontSize: 14, marginBottom: 4, display: 'block' }}>Nome</label>
+              <label htmlFor="name" style={{ fontSize: isMobile ? 10 : 14, marginBottom: 3, display: 'block' }}>Nome</label>
               <input
                 id="name"
                 type="text"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 required
-                style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid #333', background: '#222', color: 'white', fontSize: 16, marginBottom: 8 }}
+                style={{ 
+                  width: '100%', 
+                  padding: isMobile ? 6 : 10, 
+                  borderRadius: 8, 
+                  border: '1px solid #333', 
+                  background: '#222', 
+                  color: 'white', 
+                  fontSize: isMobile ? 11 : 16, 
+                  marginBottom: 6 
+                }}
               />
             </div>
           )}
           <div>
-            <label htmlFor="email" style={{ fontSize: 14, marginBottom: 4, display: 'block' }}>Email</label>
+            <label htmlFor="email" style={{ fontSize: isMobile ? 10 : 14, marginBottom: 3, display: 'block' }}>Email</label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-              style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid #333', background: '#222', color: 'white', fontSize: 16, marginBottom: 8 }}
+              style={{ 
+                width: '100%', 
+                padding: isMobile ? 6 : 10, 
+                borderRadius: 8, 
+                border: '1px solid #333', 
+                background: '#222', 
+                color: 'white', 
+                fontSize: isMobile ? 11 : 16, 
+                marginBottom: 6 
+              }}
             />
           </div>
           <div>
-            <label htmlFor="password" style={{ fontSize: 14, marginBottom: 4, display: 'block' }}>Senha</label>
+            <label htmlFor="password" style={{ fontSize: isMobile ? 10 : 14, marginBottom: 3, display: 'block' }}>Senha</label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid #333', background: '#222', color: 'white', fontSize: 16, marginBottom: 8 }}
+              style={{ 
+                width: '100%', 
+                padding: isMobile ? 6 : 10, 
+                borderRadius: 8, 
+                border: '1px solid #333', 
+                background: '#222', 
+                color: 'white', 
+                fontSize: isMobile ? 11 : 16, 
+                marginBottom: 6 
+              }}
             />
           </div>
           {error && (
-            <div style={{ color: '#ef4444', fontSize: 14, marginBottom: 8 }}>{error}</div>
+            <div style={{ color: '#ef4444', fontSize: isMobile ? 10 : 14, marginBottom: 6 }}>{error}</div>
           )}
           <button
             type="submit"
             disabled={loading}
             style={{
               width: '100%',
-              padding: 12,
+              padding: isMobile ? 7 : 12,
               background: '#22c55e',
               color: '#18181b',
               border: 'none',
               borderRadius: 8,
               fontWeight: 'bold',
-              fontSize: 18,
+              fontSize: isMobile ? 12 : 18,
               cursor: loading ? 'not-allowed' : 'pointer',
               opacity: loading ? 0.7 : 1,
-              marginBottom: 8,
+              marginBottom: 6,
             }}
           >
             {loading ? (isRegister ? 'Cadastrando...' : 'Entrando...') : (isRegister ? 'Cadastrar' : 'Entrar')}
@@ -160,8 +215,8 @@ export default function LoginPage() {
             background: 'none',
             border: 'none',
             color: '#22c55e',
-            fontSize: 15,
-            marginTop: 8,
+            fontSize: isMobile ? 10 : 15,
+            marginTop: 6,
             cursor: 'pointer',
             textDecoration: 'underline',
           }}
