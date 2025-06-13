@@ -599,18 +599,19 @@ export default function Home() {
                   setResult(null);
                   // Reset zoom when team B is selected
                   if (e.target.value) {
-                    // Reset zoom using multiple approaches for better iOS compatibility
-                    document.body.style.zoom = "100%";
-                    document.body.style.transform = "scale(1)";
-                    document.body.style.transformOrigin = "0 0";
-                    // Force a reflow
-                    document.body.style.display = "none";
-                    document.body.offsetHeight; // Force reflow
-                    document.body.style.display = "";
+                    // Reset viewport scale
+                    const viewport = document.querySelector('meta[name="viewport"]');
+                    if (viewport) {
+                      viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                    }
+                    // Force zoom reset
+                    document.body.style.zoom = "1";
                     // Add a small delay and try again
                     setTimeout(() => {
-                      document.body.style.zoom = "100%";
-                      document.body.style.transform = "scale(1)";
+                      document.body.style.zoom = "1";
+                      if (viewport) {
+                        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                      }
                     }, 100);
                   }
                 }}

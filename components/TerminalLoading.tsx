@@ -117,6 +117,9 @@ export default function TerminalLoading({ onDone }: { onDone: (duration: number)
         <div style={{ padding: '0 18px', fontSize: 13, color: '#22c55e', minHeight: 24, marginTop: 8 }}>
           {!done ? '' : `${duration.toFixed(3)}seg`}
         </div>
+        <div style={{ marginTop: 8, color: '#22c55e', fontSize: 12 }}>
+          {done ? 'complete' : 'loading'}...
+        </div>
         {done && (
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
             <button
