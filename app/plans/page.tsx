@@ -224,21 +224,10 @@ export default function Plans() {
             </div>
           </div>
         </div>
-        <ul style={{
-          listStyle: 'none',
-          padding: 0,
-          margin: '24px 0 0 0',
-          textAlign: 'left',
-          color: '#fff',
-          fontSize: 16,
-        }}>
+        <ul className="space-y-2 text-sm">
           {benefits[lang].map((b, i) => (
             <li key={i} style={{ marginBottom: 10 }}>• {b}</li>
           ))}
-          <li className="flex items-center gap-2">
-            <CheckCircle className="text-green-500" size={20} />
-            <span>{lang === 'en' ? 'Unlimited deepresults' : 'Unlimited deepresults'}</span>
-          </li>
         </ul>
         <button
           style={{
