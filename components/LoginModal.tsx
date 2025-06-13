@@ -1,3 +1,93 @@
+import { useState, useEffect } from 'react';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+import { auth } from '../lib/firebase';
+
+export default function LoginModal({ onClose, onLogin }: { onClose: () => void, onLogin: () => void }) {
+  const [isRegister, setIsRegister] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      if (isRegister) {
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          await updateProfile(userCredential.user, { displayName: name });
+          await sendEmailVerification(userCredential.user);
+          setEmailSent(true);
+        } catch (err: any) {
+          if (err.code === 'auth/email-already-in-use') {
+            setError('Essa conta já existe. Faça login.');
+            setIsRegister(false);
+            setEmailSent(false);
+            setPassword('');
+            return;
+          } else {
+            throw err;
+          }
+        }
+      } else {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        if (!userCredential.user.emailVerified) {
+          setError('Por favor, verifique seu e-mail antes de acessar.');
+          await auth.signOut();
+          setLoading(false);
+          return;
+        }
+        onLogin();
+      }
+    } catch (error: any) {
+      setError(error.message || 'Erro ao autenticar');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      background: 'rgba(0,0,0,0.7)',
+      zIndex: 9999,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <div style={{
+        maxWidth: isMobile ? 202 : 400,
+        width: '100%',
+        background: '#18181b',
+        borderRadius: 16,
+        boxShadow: '0 4px 24px #000a',
+        padding: isMobile ? 19 : 32,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        color: '#fff',
+        position: 'relative',
+      }}>
+        <button onClick={onClose} style={{ position: 'absolute', top: 10, right: 16, background: 'none', border: 'none', color: '#fff', fontSize: 22, cursor: 'pointer' }}>&times;</button>
+        <h1 style={{ fontSize: isMobile ? 18 : 28, fontWeight: 'bold', marginBottom: isMobile ? 14 : 24, letterSpacing: 1, color: '#fff' }}>{isRegister ? 'Cadastro' : 'Login'}</h1>
         {emailSent ? (
           <div style={{ color: '#22c55e', fontSize: isMobile ? 11 : 16, textAlign: 'center', marginBottom: 12 }}>
             Um link de verificação foi enviado para seu e-mail.<br />
@@ -62,4 +152,8 @@
           style={{ background: 'none', border: 'none', color: '#22c55e', fontSize: 12, marginTop: 6, cursor: 'pointer', textDecoration: 'underline' }}
         >
           {isRegister ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
-        </button> 
+        </button>
+      </div>
+    </div>
+  );
+} 
