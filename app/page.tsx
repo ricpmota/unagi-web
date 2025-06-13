@@ -4,6 +4,9 @@ import React, { useEffect, useState, useRef, JSX } from 'react';
 import Stars from './components/Stars';
 import HeaderWithMenu from '../components/HeaderWithMenu';
 import TerminalLoading from '../components/TerminalLoading';
+import LoginModal from '../components/LoginModal';
+import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from '../contexts/TranslationContext';
 
 // Função utilitária para normalizar nomes (remover acentos, caixa baixa)
 function normalizeName(name: string) {
@@ -103,6 +106,10 @@ const translations = {
     chooseTeamB: 'Choose Team B',
     noOpponent: 'No opponent found',
     search: 'Search odds',
+    login: 'Login',
+    realMadrid: 'Real Madrid',
+    barcelona: 'Barcelona',
+    odd: 'odd',
   },
   pt: {
     title: 'Antes de apostar, pergunta à UNAGI',
@@ -112,6 +119,10 @@ const translations = {
     chooseTeamB: 'Escolha o Time B',
     noOpponent: 'Nenhum adversário encontrado',
     search: 'Buscar odds',
+    login: 'Entrar',
+    realMadrid: 'Real Madrid',
+    barcelona: 'Barcelona',
+    odd: 'odd',
   }
 };
 
@@ -140,12 +151,11 @@ export default function Home() {
   const [universe, setUniverse] = useState(true);
   const [sound, setSound] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [translate, setTranslate] = useState(false);
-  const userLang = typeof window !== 'undefined' ? navigator.language.slice(0, 2) : 'en';
-  const lang = translate ? (userLang === 'pt' ? 'pt' : 'en') : 'en';
-  const t = translations[lang as 'en' | 'pt'];
+  const { translate, setTranslate, lang } = useTranslation();
   const [showTerminal, setShowTerminal] = useState(false);
   const [pendingPredict, setPendingPredict] = useState<null | (() => void)>(null);
+  const { user, loading: authLoading } = useAuth();
+  const [blurResult, setBlurResult] = useState(false);
 
   // Cores dinâmicas
   const bgColor = dark ? '#0B0B0B' : '#fff';
@@ -350,13 +360,13 @@ export default function Home() {
             {formattedDate}
           </div>
           <div style={{ marginBottom: 8, color: dark ? '#d1d5db' : '#18181b', fontSize: 15 }}>
-            Real Madrid: <span style={{ color: dark ? 'white' : '#18181b', fontWeight: 'bold' }}>{pctA}%</span> (odd {oddsA})
+            {translations[lang].realMadrid}: <span style={{ color: dark ? 'white' : '#18181b', fontWeight: 'bold' }}>{pctA}%</span> ({translations[lang].odd} {oddsA})
           </div>
           <div style={{ width: '100%', background: dark ? '#374151' : '#bbb', borderRadius: 6, height: 12, marginBottom: 16 }}>
             <div style={{ background: '#22c55e', height: 12, borderRadius: 6, width: `${pctA}%` }}></div>
           </div>
           <div style={{ marginBottom: 8, color: dark ? '#d1d5db' : '#18181b', fontSize: 15 }}>
-            Barcelona: <span style={{ color: dark ? 'white' : '#18181b', fontWeight: 'bold' }}>{pctB}%</span> (odd {oddsB})
+            {translations[lang].barcelona}: <span style={{ color: dark ? 'white' : '#18181b', fontWeight: 'bold' }}>{pctB}%</span> ({translations[lang].odd} {oddsB})
           </div>
           <div style={{ width: '100%', background: dark ? '#374151' : '#bbb', borderRadius: 6, height: 12 }}>
             <div style={{ background: '#ef4444', height: 12, borderRadius: 6, width: `${pctB}%` }}></div>
@@ -364,6 +374,7 @@ export default function Home() {
         </div>
       );
       setLoading(false);
+      setBlurResult(!user);
     });
   }
 
@@ -486,7 +497,7 @@ export default function Home() {
               padding: '0 8px',
               textAlign: 'center',
               color: fgColor
-            }}>{t.title}</h1>
+            }}>{translations[lang].title}</h1>
             <h2 style={{ 
               fontSize: fontSizeH2,
               letterSpacing: '0.05em', 
@@ -497,7 +508,7 @@ export default function Home() {
               textAlign: 'center',
               color: fgColor
             }}>
-              {t.subtitle}
+              {translations[lang].subtitle}
             </h2>
           </div>
           
@@ -527,7 +538,7 @@ export default function Home() {
                     setShowSuggestionsA(true);
                   }
                 }}
-                placeholder={t.teamA}
+                placeholder={translations[lang].teamA}
                 style={{
                   width: '100%',
                   height: 44,
@@ -605,11 +616,11 @@ export default function Home() {
                 }}
               >
                 {!teamASelected ? (
-                  <option value="" disabled>{t.chooseTeamA}</option>
+                  <option value="" disabled>{translations[lang].chooseTeamA}</option>
                 ) : adversaries.length === 0 ? (
-                  <option value="" disabled>{t.noOpponent}</option>
+                  <option value="" disabled>{translations[lang].noOpponent}</option>
                 ) : (
-                  <option value="" disabled>{t.chooseTeamB}</option>
+                  <option value="" disabled>{translations[lang].chooseTeamB}</option>
                 )}
                 {adversaries.map(name => (
                   <option key={name} value={name}>{name}</option>
@@ -636,19 +647,58 @@ export default function Home() {
                 opacity: (!teamA || !teamB) ? 0.5 : 1,
                 flexShrink: 0,
               }}
-              aria-label={t.search}
+              aria-label={translations[lang].search}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
             </button>
           </div>
-          <div id="predictionResult" style={{ 
-            width: '100%', 
-            maxWidth: '600px',
-            display: 'flex', 
-            justifyContent: 'center',
-            padding: '0 16px'
-          }}>
-            {result}
+          <div style={{ position: 'relative', width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+            <div id="predictionResult" style={{ 
+              width: '100%', 
+              display: 'flex', 
+              justifyContent: 'center',
+              padding: '0 16px',
+              filter: blurResult ? 'blur(7px)' : undefined,
+              transition: 'filter 0.3s',
+              position: 'relative',
+              zIndex: 1,
+            }}>
+              {result}
+            </div>
+            {!user && blurResult && (
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 10,
+                pointerEvents: 'none',
+              }}>
+                <a
+                  href="/login"
+                  style={{
+                    background: '#444',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: 8,
+                    fontWeight: 'bold',
+                    fontFamily: 'Consolas, monospace',
+                    fontSize: 16,
+                    padding: '12px 32px',
+                    textDecoration: 'none',
+                    boxShadow: '0 2px 8px #0006',
+                    pointerEvents: 'auto',
+                    opacity: 1,
+                  }}
+                >
+                  {translations[lang].login}
+                </a>
+              </div>
+            )}
           </div>
         </main>
       </div>
