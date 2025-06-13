@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useTranslation } from '../../contexts/TranslationContext';
 
 interface TeamSearchModalProps {
   open: boolean;
@@ -13,7 +12,6 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
   const [searchTerm, setSearchTerm] = useState('');
   const [filtered, setFiltered] = useState<string[]>(teamList);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (open) {
@@ -39,29 +37,38 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
       position: 'fixed',
       top: 0,
       left: 0,
-      width: '100vw',
-      height: '100vh',
-      background: 'rgba(0,0,0,0.7)',
-      zIndex: 9999,
+      right: 0,
+      bottom: 0,
+      background: 'rgba(0,0,0,0.5)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      zIndex: 1000,
+      padding: 20
     }}>
       <div style={{
-        maxWidth: 320,
-        width: '90%',
         background: dark ? '#18181b' : '#fff',
-        borderRadius: 16,
-        boxShadow: '0 4px 24px #000a',
-        padding: 22,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        color: dark ? '#fff' : '#18181b',
-        position: 'relative',
+        borderRadius: 12,
+        padding: 20,
+        width: '100%',
+        maxWidth: 400,
+        boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
       }}>
-        <button onClick={onClose} style={{ position: 'absolute', top: 10, right: 16, background: 'none', border: 'none', color: dark ? '#fff' : '#18181b', fontSize: 22, cursor: 'pointer' }}>&times;</button>
-        <h2 style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 14, letterSpacing: 1 }}>Buscar Time</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+          <h3 style={{ color: dark ? '#fff' : '#18181b', margin: 0 }}>Buscar Time</h3>
+          <button
+            onClick={onClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: dark ? '#fff' : '#18181b',
+              cursor: 'pointer',
+              fontSize: 20
+            }}
+          >
+            ×
+          </button>
+        </div>
         <input
           ref={inputRef}
           type="text"
@@ -91,21 +98,23 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
           ) : filtered.length === 0 ? (
             <div style={{ padding: 16, textAlign: 'center', color: '#aaa', fontSize: 14 }}>Nenhum time encontrado</div>
           ) : (
-            filtered.map(team => (
+            filtered.map((team, index) => (
               <div
-                key={team}
-                onClick={() => { onSelect(team); onClose(); }}
-                style={{
-                  padding: '10px 14px',
-                  cursor: 'pointer',
-                  borderBottom: '1px solid #333',
-                  color: dark ? '#fff' : '#18181b',
-                  fontSize: 15,
-                  fontFamily: 'Consolas, monospace',
-                  background: 'none',
-                  transition: 'background 0.2s',
+                key={index}
+                onClick={() => {
+                  onSelect(team);
+                  onClose();
                 }}
-                onMouseDown={e => e.preventDefault()}
+                style={{
+                  padding: '12px 16px',
+                  cursor: 'pointer',
+                  color: dark ? '#fff' : '#18181b',
+                  borderBottom: index < filtered.length - 1 ? '1px solid #333' : 'none',
+                  fontSize: 14,
+                  transition: 'background-color 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = dark ? '#333' : '#f5f5f5'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
                 {team}
               </div>
