@@ -7,6 +7,7 @@ import TerminalLoading from '../components/TerminalLoading';
 import LoginModal from './login/LoginModal';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from '../contexts/TranslationContext';
+import TeamSearchModal from './components/TeamSearchModal';
 
 // Função utilitária para normalizar nomes (remover acentos, caixa baixa)
 function normalizeName(name: string) {
@@ -156,6 +157,8 @@ export default function Home() {
   const [pendingPredict, setPendingPredict] = useState<null | (() => void)>(null);
   const { user, loading: authLoading } = useAuth();
   const [blurResult, setBlurResult] = useState(false);
+  const [showTeamSearchModal, setShowTeamSearchModal] = useState(false);
+  const [showTeamSearchModalB, setShowTeamSearchModalB] = useState(false);
 
   // Cores dinâmicas
   const bgColor = dark ? '#0B0B0B' : '#fff';
@@ -530,14 +533,8 @@ export default function Home() {
                 ref={inputARef}
                 type="text"
                 value={teamA}
-                onChange={handleInputA}
-                onFocus={() => {
-                  if (teamA.length >= 3) {
-                    const filtered = filterSuggestions(teamA);
-                    setSuggestionsA(filtered);
-                    setShowSuggestionsA(true);
-                  }
-                }}
+                readOnly
+                onClick={() => setShowTeamSearchModal(true)}
                 placeholder={translations[lang].teamA}
                 style={{
                   width: '100%',
@@ -551,6 +548,7 @@ export default function Home() {
                   outline: 'none',
                   fontFamily: 'Consolas, monospace',
                   boxSizing: 'border-box',
+                  cursor: 'pointer',
                   ...(isMobile && { fontSize: '10px' }),
                 }}
                 autoComplete="off"
@@ -592,30 +590,12 @@ export default function Home() {
             </div>
             <div ref={xRef} style={{ fontSize: 24, fontWeight: 'bold', color: xColor, margin: '0 2px', userSelect: 'none', flexShrink: 0 }}>X</div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <select
+              <input
+                type="text"
                 value={teamB}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { 
-                  setTeamB(e.target.value); 
-                  setResult(null);
-                  // Reset zoom when team B is selected
-                  if (e.target.value) {
-                    // Reset viewport scale
-                    const viewport = document.querySelector('meta[name="viewport"]');
-                    if (viewport) {
-                      viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-                    }
-                    // Force zoom reset
-                    document.body.style.zoom = "1";
-                    // Add a small delay and try again
-                    setTimeout(() => {
-                      document.body.style.zoom = "1";
-                      if (viewport) {
-                        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-                      }
-                    }, 100);
-                  }
-                }}
-                disabled={!teamASelected || adversaries.length === 0}
+                readOnly
+                onClick={() => setShowTeamSearchModalB(true)}
+                placeholder={translations[lang].chooseTeamB || 'Team B'}
                 style={{
                   width: '100%',
                   height: 44,
@@ -627,25 +607,13 @@ export default function Home() {
                   padding: '0 10px',
                   outline: 'none',
                   fontFamily: 'Consolas, monospace',
-                  appearance: 'none',
-                  WebkitAppearance: 'none',
-                  MozAppearance: 'none',
-                  cursor: !teamASelected || adversaries.length === 0 ? 'not-allowed' : 'pointer',
                   boxSizing: 'border-box',
+                  cursor: !teamASelected || adversaries.length === 0 ? 'not-allowed' : 'pointer',
                   ...(isMobile && { fontSize: '10px' }),
                 }}
-              >
-                {!teamASelected ? (
-                  <option value="" disabled>{translations[lang].chooseTeamA}</option>
-                ) : adversaries.length === 0 ? (
-                  <option value="" disabled>{translations[lang].noOpponent}</option>
-                ) : (
-                  <option value="" disabled>{translations[lang].chooseTeamB}</option>
-                )}
-                {adversaries.map(name => (
-                  <option key={name} value={name}>{name}</option>
-                ))}
-              </select>
+                disabled={!teamASelected || adversaries.length === 0}
+                autoComplete="off"
+              />
             </div>
             <button
               id="predictBtn"
@@ -723,6 +691,27 @@ export default function Home() {
         </main>
       </div>
       {showTerminal && <TerminalLoading onDone={handleTerminalDone} />}
+      <TeamSearchModal
+        open={showTeamSearchModal}
+        onClose={() => setShowTeamSearchModal(false)}
+        teamList={teamList}
+        onSelect={name => {
+          setTeamA(name);
+          setTeamASelected(true);
+          setResult(null);
+        }}
+        dark={dark}
+      />
+      <TeamSearchModal
+        open={showTeamSearchModalB}
+        onClose={() => setShowTeamSearchModalB(false)}
+        teamList={adversaries}
+        onSelect={name => {
+          setTeamB(name);
+          setResult(null);
+        }}
+        dark={dark}
+      />
     </div>
   );
 }
