@@ -26,6 +26,14 @@ export default function Plans() {
   const [pendingAnnual, setPendingAnnual] = React.useState(false);
   const animating = useRef(false);
   const { translate, setTranslate, lang } = useTranslation();
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 600);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Função para animar o preço (mais rápida)
   function animatePrice(target: number) {
@@ -60,7 +68,6 @@ export default function Plans() {
   const subscribeText = lang === 'en' ? 'Subscribe now' : 'Assine agora';
 
   // Responsividade para container
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
   const cardMaxWidth = isMobile ? 256 : 320;
   const cardPadding = isMobile ? 16 : 26;
   // Largura dinâmica baseada no texto selecionado
@@ -128,9 +135,8 @@ export default function Plans() {
       position: 'relative',
     }}>
       <HeaderWithMenu dark={true} />
-      {/* Logo fora do card, centralizada, 5x5cm (aprox 189x189px) */}
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: 24, marginBottom: 16 }}>
-        <Image src="/logo.png" alt="logo" width={189} height={189} style={{ objectFit: 'contain', width: '5cm', height: '5cm' }} />
+        <Image src="/logo.png" alt="logo" width={94} height={94} style={{ objectFit: 'contain', width: '2.5cm', height: '2.5cm' }} />
       </div>
       <div style={{
         background: 'rgba(16,16,16,0.95)',
