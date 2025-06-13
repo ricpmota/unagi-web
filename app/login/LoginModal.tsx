@@ -146,7 +146,7 @@ export default function LoginModal({ onClose, onLogin }: { onClose: () => void, 
             {loading ? (isRegister ? 'Cadastrando...' : 'Entrando...') : (isRegister ? 'Cadastrar' : 'Entrar')}
           </button>
         </form>
-        )}
+        }
         <button
           onClick={() => setIsRegister(r => !r)}
           style={{ background: 'none', border: 'none', color: '#22c55e', fontSize: 12, marginTop: 6, cursor: 'pointer', textDecoration: 'underline' }}
