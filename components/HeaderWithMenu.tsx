@@ -158,9 +158,10 @@ export default function HeaderWithMenu({ dark = true }: { dark?: boolean }) {
                 onClick={e => e.stopPropagation()}
               >
                 <a href="/" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px', borderBottom: `1px solid ${borderItem}` }}>Home</a>
-                <a href="/statistics" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px', borderBottom: `1px solid ${borderItem}` }}>Estatísticas</a>
+                <a href="/statistics" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px', borderBottom: `1px solid ${borderItem}` }}>Statistics</a>
                 <a href="/banking" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px', borderBottom: `1px solid ${borderItem}` }}>Banking</a>
                 <a href="/crowdmarketing" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px' }}>Crowd Marketing</a>
+                <a href="/plans" style={{ display: 'block', color: menuLink, textDecoration: 'none', padding: '12px 20px', borderTop: `1px solid ${borderItem}` }}>Plans</a>
               </div>
             )}
           </div>
