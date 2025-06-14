@@ -614,7 +614,6 @@ export default function Home() {
                 type="text"
                 value={teamB}
                 readOnly
-                onClick={() => setShowTeamSearchModalB(true)}
                 placeholder={translations[lang].chooseTeamB || 'Team B'}
                 style={{
                   width: '100%',
@@ -628,9 +627,11 @@ export default function Home() {
                   outline: 'none',
                   fontFamily: 'Consolas, monospace',
                   boxSizing: 'border-box',
-                  cursor: 'pointer',
+                  cursor: 'not-allowed',
                   ...(isMobile && { fontSize: '10px' }),
+                  opacity: teamA ? 1 : 0.5,
                 }}
+                disabled
                 autoComplete="off"
               />
             </div>
@@ -714,25 +715,30 @@ export default function Home() {
         open={showTeamSearchModal}
         onClose={() => setShowTeamSearchModal(false)}
         teamList={teamList}
+        title="Select Team A"
         onSelect={name => {
           setTeamA(name);
           setTeamASelected(true);
           setResult(null);
+          setShowTeamSearchModal(false);
+          setTimeout(() => setShowTeamSearchModalB(true), 400); // delay maior para evitar zoom
         }}
         dark={dark}
+        autoFocus={true}
       />
       <TeamSearchModal
         open={showTeamSearchModalB}
         onClose={() => setShowTeamSearchModalB(false)}
         teamList={adversaries}
+        title="Select Team B"
         onSelect={name => {
           setTeamB(name);
           setResult(null);
           localStorage.setItem('teamA', teamA);
           localStorage.setItem('teamB', name);
-          window.location.reload();
         }}
         dark={dark}
+        autoFocus={false}
       />
     </div>
   );

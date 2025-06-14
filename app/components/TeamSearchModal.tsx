@@ -7,9 +7,10 @@ interface TeamSearchModalProps {
   onSelect: (team: string) => void;
   dark?: boolean;
   title?: string;
+  autoFocus?: boolean;
 }
 
-export default function TeamSearchModal({ open, onClose, teamList, onSelect, dark = true, title }: TeamSearchModalProps) {
+export default function TeamSearchModal({ open, onClose, teamList, onSelect, dark = true, title, autoFocus = true }: TeamSearchModalProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filtered, setFiltered] = useState<string[]>(teamList);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -18,9 +19,11 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
     if (open) {
       setSearchTerm('');
       setFiltered(teamList);
-      setTimeout(() => inputRef.current?.focus(), 100);
+      if (autoFocus) {
+        setTimeout(() => inputRef.current?.focus(), 100);
+      }
     }
-  }, [open, teamList]);
+  }, [open, teamList, autoFocus]);
 
   useEffect(() => {
     const term = searchTerm.trim().toLowerCase();
