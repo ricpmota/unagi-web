@@ -110,10 +110,13 @@ export default function PlansPage() {
         border: '2px solid #22c55e',
         borderRadius: 14,
         boxShadow: '0 0 24px #000a',
-        padding: 29,
-        maxWidth: 352,
+        padding: 18,
+        maxWidth: 270,
         width: '100%',
-        textAlign: 'center'
+        textAlign: 'center',
+        boxSizing: 'border-box',
+        margin: '0 auto',
+        ...(typeof window !== 'undefined' && window.innerWidth < 340 ? { maxWidth: window.innerWidth - 20 } : {})
       }}>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 8px' }}>
