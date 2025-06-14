@@ -64,7 +64,7 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',
       }}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 18 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
           <h3 style={{
             color: '#22c55e',
             margin: 0,
@@ -75,6 +75,30 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
             textAlign: 'center',
             width: '100%'
           }}>{title || 'Search Team'}</h3>
+          <button
+            onClick={onClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: dark ? '#fff' : '#18181b',
+              cursor: 'pointer',
+              fontSize: 28,
+              fontWeight: 700,
+              marginLeft: 8,
+              width: 38,
+              height: 38,
+              borderRadius: 19,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'background 0.2s',
+            }}
+            aria-label="Close"
+            onMouseOver={e => e.currentTarget.style.background = '#22c55e22'}
+            onMouseOut={e => e.currentTarget.style.background = 'none'}
+          >
+            ×
+          </button>
         </div>
         <input
           ref={inputRef}
