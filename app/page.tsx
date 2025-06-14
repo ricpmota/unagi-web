@@ -549,13 +549,9 @@ export default function Home() {
             }}
           >
             <div style={{ position: 'relative', flex: 1, minWidth: 0 }}>
-              <input
-                ref={inputARef}
-                type="text"
-                value={teamA}
-                readOnly
+              <button
+                type="button"
                 onClick={() => setShowTeamSearchModal(true)}
-                placeholder={translations[lang].teamA}
                 style={{
                   width: '100%',
                   height: 44,
@@ -563,58 +559,31 @@ export default function Home() {
                   color: inputColor,
                   border: `1px solid ${inputBorder}`,
                   borderRadius: 8,
-                  fontSize: fontSizeInput,
+                  fontSize: '12px',
+                  fontWeight: 400,
+                  lineHeight: '12px',
                   padding: '0 10px',
                   outline: 'none',
                   fontFamily: 'Consolas, monospace',
                   boxSizing: 'border-box',
                   cursor: 'pointer',
-                  ...(isMobile && { fontSize: '10px' }),
+                  textAlign: 'left',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  letterSpacing: 0,
                 }}
-                autoComplete="off"
-              />
-              {showSuggestionsA && suggestionsA.length > 0 && (
-                <ul style={{
-                  position: 'absolute',
-                  top: 46,
-                  left: 0,
-                  width: '100%',
-                  background: suggestionBg,
-                  border: `1px solid ${inputBorder}`,
-                  borderRadius: 8,
-                  maxHeight: 200,
-                  overflowY: 'auto',
-                  zIndex: 30,
-                  margin: 0,
-                  padding: 0,
-                  listStyle: 'none',
-                }}>
-                  {suggestionsA.map(name => (
-                    <li
-                      key={name}
-                      onMouseDown={() => handleSuggestionClickA(name)}
-                      style={{
-                        padding: '8px 12px',
-                        cursor: 'pointer',
-                        color: suggestionColor,
-                        background: name === teamA ? suggestionActiveBg : 'none',
-                        fontSize: 13,
-                        textAlign: 'left',
-                      }}
-                    >
-                      {name}
-                    </li>
-                  ))}
-                </ul>
-              )}
+              >
+                {teamA ? (
+                  <span style={{ fontSize: '12px', fontWeight: 400, color: inputColor }}>{teamA}</span>
+                ) : (
+                  <span style={{ fontSize: '12px', fontWeight: 400, color: '#888' }}>{translations[lang].teamA}</span>
+                )}
+              </button>
             </div>
             <div ref={xRef} style={{ fontSize: 24, fontWeight: 'bold', color: xColor, margin: '0 2px', userSelect: 'none', flexShrink: 0 }}>X</div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <input
-                type="text"
-                value={teamB}
-                readOnly
-                placeholder={translations[lang].chooseTeamB || 'Team B'}
+              <div
                 style={{
                   width: '100%',
                   height: 44,
@@ -622,18 +591,25 @@ export default function Home() {
                   color: selectColor,
                   border: `1px solid ${selectBorder}`,
                   borderRadius: 8,
-                  fontSize: fontSizeInput,
+                  fontSize: '12px',
+                  fontWeight: 400,
+                  lineHeight: '12px',
                   padding: '0 10px',
                   outline: 'none',
                   fontFamily: 'Consolas, monospace',
                   boxSizing: 'border-box',
-                  cursor: 'not-allowed',
-                  ...(isMobile && { fontSize: '10px' }),
+                  display: 'flex',
+                  alignItems: 'center',
                   opacity: teamA ? 1 : 0.5,
+                  letterSpacing: 0,
                 }}
-                disabled
-                autoComplete="off"
-              />
+              >
+                {teamB ? (
+                  <span style={{ fontSize: '12px', fontWeight: 400, color: selectColor }}>{teamB}</span>
+                ) : (
+                  <span style={{ fontSize: '12px', fontWeight: 400, color: '#888' }}>{translations[lang].chooseTeamB || 'Team B'}</span>
+                )}
+              </div>
             </div>
             <button
               id="predictBtn"
