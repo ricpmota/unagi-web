@@ -1,1 +1,259 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="preload" href="/_next/static/media/e4af272ccee01ff0-s.p.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="stylesheet" href="/_next/static/css/b0260919fc2f8291.css" crossorigin="" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-2805df4ca978b518.js" crossorigin=""/><script src="/_next/static/chunks/fd9d1056-0caa3c132cffad44.js" async="" crossorigin=""></script><script src="/_next/static/chunks/472-a2b3725bad511e9d.js" async="" crossorigin=""></script><script src="/_next/static/chunks/main-app-04f04cbfb35ede0a.js" async="" crossorigin=""></script><script src="/_next/static/chunks/app/global-error-c5b28b71593a91b6.js" async=""></script><script src="/_next/static/chunks/36546cfe-e3eb19bde28c8878.js" async=""></script><script src="/_next/static/chunks/923-78cbf7b07efdd714.js" async=""></script><script src="/_next/static/chunks/app/layout-6c36777a985ffbe6.js" async=""></script><script src="/_next/static/chunks/app/error-a646a7dacc98a4a7.js" async=""></script><script src="/_next/static/chunks/758-70af193e208b56a5.js" async=""></script><script src="/_next/static/chunks/294-05fec90ab8d7a59f.js" async=""></script><script src="/_next/static/chunks/app/plans/page-a76f4cb02a2e8efc.js" async=""></script><title>Unagi</title><meta name="description" content="Unagi - Previsão de Jogos"/><meta name="next-size-adjust"/><script src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js" crossorigin="" noModule=""></script></head><body class="__className_e8ce0c"><!--$--><div style="min-height:100vh;background:var(--background, #000);color:var(--foreground, #fff);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:Consolas, monospace;padding:16px;position:relative"><header style="position:fixed;top:0;left:0;right:0;padding:1.5rem 2rem 0.5rem 2rem;display:flex;justify-content:space-between;align-items:flex-start;z-index:50;background:rgba(0, 0, 0, 0.0);font-family:monospace;pointer-events:none"><div style="color:#fff;font-family:monospace;pointer-events:auto"><div style="font-weight:bold;font-size:2rem;line-height:1">unagi</div><div style="color:#9ca3af;font-size:1rem;letter-spacing:1px">powered by AI</div></div><div style="display:flex;flex-direction:row;align-items:flex-start;gap:24px;pointer-events:auto"><div style="text-align:right;font-family:monospace;display:flex;flex-direction:column;align-items:flex-end"><div style="color:#fff;font-size:1rem;letter-spacing:1px">AI omni v4</div></div><div style="position:relative"><button aria-label="Abrir menu" style="background:none;border:none;cursor:pointer;padding:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;margin-left:8px"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg></button></div></div></header><div style="width:100%;display:flex;justify-content:center;margin-top:24px;margin-bottom:16px"><img alt="logo" loading="lazy" width="94" height="94" decoding="async" data-nimg="1" style="color:transparent;object-fit:contain;width:2.5cm;height:2.5cm" srcSet="/_next/image?url=%2Flogo.png&amp;w=96&amp;q=75 1x, /_next/image?url=%2Flogo.png&amp;w=256&amp;q=75 2x" src="/_next/image?url=%2Flogo.png&amp;w=256&amp;q=75"/></div><div style="background:rgba(16,16,16,0.95);border:2px solid #22c55e;border-radius:14px;box-shadow:0 0 24px #000a;padding:29px;max-width:352px;width:100%;text-align:center"><div style="display:flex;justify-content:flex-end;margin-bottom:8px"><div style="display:flex;flex-direction:column;align-items:center;margin:0 8px"><button style="width:46px;height:24px;border-radius:17px;background:#444;border:2px solid #444;display:flex;align-items:center;justify-content:flex-start;padding:2.5px;cursor:pointer;transition:background 0.4s;box-sizing:border-box;opacity:1" aria-label="translate"><div style="width:18.7px;height:18.7px;border-radius:50%;background:#fff;box-shadow:0 1px 4px #0006;transition:transform 0.4s"></div></button><span style="color:#fff;font-family:Consolas, monospace;font-size:12px;margin-top:2px">translate</span></div></div><h2 style="font-size:28px;margin:0;font-weight:700;letter-spacing:1px">Plans</h2><div style="margin:18px 0 8px;font-size:32px;font-weight:700;height:40px;display:flex;align-items:center;justify-content:center"><span style="display:inline-block;min-width:90px;transition:color 0.2s">$<!-- -->4.99</span><span style="font-size:16px;font-weight:400;margin-left:4px">/ <!-- -->month</span></div><div style="display:flex;justify-content:center;margin-bottom:18px"><div style="background:#18181b;border:none;border-radius:20px;display:flex;width:178px;height:40px;position:relative;cursor:pointer;user-select:none;align-items:center"><div style="position:absolute;top:5px;left:0;width:94px;height:30px;background:#22c55e;border-radius:16px;transition:left 0.4s cubic-bezier(.4,2,.6,1), width 0.4s cubic-bezier(.4,2,.6,1);z-index:1"></div><div style="width:94px;z-index:2;display:flex;align-items:center;justify-content:center;color:#101010;font-weight:bold;font-size:17px;transition:color 0.2s">Monthly</div><div style="width:84px;z-index:2;display:flex;align-items:center;justify-content:center;color:#22c55e;font-weight:bold;font-size:17px;transition:color 0.2s">Annual</div></div></div><ul style="list-style:none;padding:0;margin:24px 0 0 0;text-align:left;color:#fff;font-size:16px"><li style="margin-bottom:10px">• <!-- -->Unlimited deepresults analysis</li><li style="margin-bottom:10px">• <!-- -->5 deepresults APIs</li><li style="margin-bottom:10px">• <!-- -->Context memory</li><li style="margin-bottom:10px">• <!-- -->Omni v4 model</li></ul><button style="margin-top:32px;background:#22c55e;color:#101010;border:none;border-radius:8px;font-weight:bold;font-family:Consolas, monospace;font-size:18px;padding:12px 0;width:100%;cursor:pointer;box-shadow:0 2px 8px #0006">Subscribe now</button></div></div><!--/$--><script src="/_next/static/chunks/webpack-2805df4ca978b518.js" crossorigin="" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n2:HL[\"/_next/static/css/b0260919fc2f8291.css\",\"style\",{\"crossOrigin\":\"\"}]\n0:\"$L3\"\n"])</script><script>self.__next_f.push([1,"4:I[3728,[],\"\"]\n6:I[1827,[\"470\",\"static/chunks/app/global-error-c5b28b71593a91b6.js\"],\"\"]\n7:I[8763,[\"315\",\"static/chunks/36546cfe-e3eb19bde28c8878.js\",\"923\",\"static/chunks/923-78cbf7b07efdd714.js\",\"185\",\"static/chunks/app/layout-6c36777a985ffbe6.js\"],\"TranslationProvider\"]\n8:I[1344,[\"315\",\"static/chunks/36546cfe-e3eb19bde28c8878.js\",\"923\",\"static/chunks/923-78cbf7b07efdd714.js\",\"185\",\"static/chunks/app/layout-6c36777a985ffbe6.js\"],\"AuthProvider\"]\n9:I[6954,[],\"\"]\na:I[1598,[\"601\",\"static/chunks/app/error-a646"])</script><script>self.__next_f.push([1,"a7dacc98a4a7.js\"],\"\"]\nb:I[7264,[],\"\"]\nd:I[8297,[],\"\"]\ne:I[4094,[\"315\",\"static/chunks/36546cfe-e3eb19bde28c8878.js\",\"923\",\"static/chunks/923-78cbf7b07efdd714.js\",\"758\",\"static/chunks/758-70af193e208b56a5.js\",\"294\",\"static/chunks/294-05fec90ab8d7a59f.js\",\"996\",\"static/chunks/app/plans/page-a76f4cb02a2e8efc.js\"],\"\"]\n"])</script><script>self.__next_f.push([1,"3:[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/b0260919fc2f8291.css\",\"precedence\":\"next\",\"crossOrigin\":\"\"}]],[\"$\",\"$L4\",null,{\"buildId\":\"ERBh9_ORop3ZCVgBWNFTa\",\"assetPrefix\":\"\",\"initialCanonicalUrl\":\"/plans\",\"initialTree\":[\"\",{\"children\":[\"plans\",{\"children\":[\"__PAGE__\",{}]}]},\"$undefined\",\"$undefined\",true],\"initialHead\":[false,\"$L5\"],\"globalErrorComponent\":\"$6\",\"children\":[null,[\"$\",\"html\",null,{\"lang\":\"pt-BR\",\"children\":[\"$\",\"body\",null,{\"className\":\"__className_e8ce0c\",\"children\":[\"$\",\"$L7\",null,{\"children\":[\"$\",\"$L8\",null,{\"children\":[\"$\",\"$L9\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"loading\":[\"$\",\"div\",null,{\"className\":\"min-h-screen bg-black text-white flex items-center justify-center\",\"children\":[\"$\",\"div\",null,{\"className\":\"text-xl\",\"children\":\"Carregando...\"}]}],\"loadingStyles\":[],\"hasLoading\":true,\"error\":\"$a\",\"errorStyles\":[],\"template\":[\"$\",\"$Lb\",null,{}],\"templateStyles\":\"$undefined\",\"notFound\":[\"$\",\"div\",null,{\"className\":\"min-h-screen bg-black text-white flex flex-col items-center justify-center p-4\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-2xl font-bold mb-4\",\"children\":\"Page not found\"}],[\"$\",\"p\",null,{\"className\":\"mb-4\",\"children\":\"The page you're looking for doesn't exist.\"}],[\"$\",\"a\",null,{\"href\":\"/\",\"className\":\"bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors\",\"children\":\"Go back home\"}]]}],\"notFoundStyles\":[],\"childProp\":{\"current\":[\"$\",\"$L9\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"plans\",\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"template\":[\"$\",\"$Lb\",null,{}],\"templateStyles\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$Lc\",[\"$\",\"$Ld\",null,{\"propsForComponent\":{\"params\":{}},\"Component\":\"$e\",\"isStaticGeneration\":true}],null],\"segment\":\"__PAGE__\"},\"styles\":[]}],\"segment\":\"plans\"},\"styles\":[]}]}]}]}]}],null]}]]\n"])</script><script>self.__next_f.push([1,"5:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"1\",{\"children\":\"Unagi\"}],[\"$\",\"meta\",\"2\",{\"name\":\"description\",\"content\":\"Unagi - Previsão de Jogos\"}],[\"$\",\"meta\",\"3\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1.0\"}],[\"$\",\"meta\",\"4\",{\"name\":\"next-size-adjust\"}]]\nc:null\n"])</script></body></html>
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from '../../contexts/TranslationContext';
+import HeaderWithMenu from '../../components/HeaderWithMenu';
+import Image from 'next/image';
+
+const benefits = {
+  en: [
+    'Unlimited deepresults',
+    '5 deepresults APIs',
+    'Context memory',
+    'Omni v4 model'
+  ],
+  pt: [
+    'Deepresults ilimitados',
+    '5 APIs de deepresults',
+    'Memória de contexto',
+    'Modelo Omni v4'
+  ]
+};
+
+const translations = {
+  en: {
+    title: 'Plans',
+    monthly: 'Monthly',
+    annual: 'Annual',
+    subscribe: 'Subscribe now'
+  },
+  pt: {
+    title: 'Planos',
+    monthly: 'Mensal',
+    annual: 'Anual',
+    subscribe: 'Assinar agora'
+  }
+};
+
+export default function PlansPage() {
+  const { lang, translate, setTranslate } = useTranslation();
+  const [isAnnual, setIsAnnual] = useState(false);
+  const [price, setPrice] = useState('49.99');
+
+  useEffect(() => {
+    if (isAnnual) {
+      let currentValue = 4.99;
+      const targetValue = 49.99;
+      const duration = 1000; // 1 segundo
+      const steps = 20;
+      const increment = (targetValue - currentValue) / steps;
+      const interval = duration / steps;
+
+      let step = 0;
+      const timer = setInterval(() => {
+        step++;
+        currentValue += increment;
+        setPrice(currentValue.toFixed(2));
+        if (step >= steps) {
+          clearInterval(timer);
+          setPrice('49.99');
+        }
+      }, interval);
+
+      return () => clearInterval(timer);
+    } else {
+      let currentValue = 49.99;
+      const targetValue = 4.99;
+      const duration = 1000; // 1 segundo
+      const steps = 20;
+      const increment = (targetValue - currentValue) / steps;
+      const interval = duration / steps;
+
+      let step = 0;
+      const timer = setInterval(() => {
+        step++;
+        currentValue += increment;
+        setPrice(currentValue.toFixed(2));
+        if (step >= steps) {
+          clearInterval(timer);
+          setPrice('4.99');
+        }
+      }, interval);
+
+      return () => clearInterval(timer);
+    }
+  }, [isAnnual]);
+
+  const handleTranslate = () => {
+    setTranslate(!translate);
+  };
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: 'var(--background, #000)',
+      color: 'var(--foreground, #fff)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      fontFamily: 'Consolas, monospace',
+      padding: 16,
+      position: 'relative',
+    }}>
+      <HeaderWithMenu dark={true} />
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: 24, marginBottom: 16 }}>
+        <Image src="/logo.png" alt="logo" width={94} height={94} style={{ objectFit: 'contain', width: '2.5cm', height: '2.5cm' }} />
+      </div>
+      <div style={{
+        background: 'rgba(16,16,16,0.95)',
+        border: '2px solid #22c55e',
+        borderRadius: 14,
+        boxShadow: '0 0 24px #000a',
+        padding: 29,
+        maxWidth: 352,
+        width: '100%',
+        textAlign: 'center'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 8px' }}>
+            <button
+              onClick={handleTranslate}
+              style={{
+                width: 46,
+                height: 24,
+                borderRadius: 17,
+                background: translate ? '#22c55e' : '#444',
+                border: `2px solid ${translate ? '#22c55e' : '#444'}`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                padding: 2.5,
+                cursor: 'pointer',
+                transition: 'background 0.4s, border 0.4s',
+                boxSizing: 'border-box',
+                opacity: 1
+              }}
+              aria-label="translate"
+            >
+              <div style={{
+                width: 18.7,
+                height: 18.7,
+                borderRadius: '50%',
+                background: '#fff',
+                boxShadow: '0 1px 4px #0006',
+                transition: 'transform 0.4s',
+                transform: translate ? 'translateX(22px)' : 'translateX(0)'
+              }} />
+            </button>
+            <span style={{ color: '#fff', fontFamily: 'Consolas, monospace', fontSize: 12, marginTop: 2 }}>translate</span>
+          </div>
+        </div>
+        <h2 style={{ fontSize: 28, margin: 0, fontWeight: 700, letterSpacing: 1 }}>{translations[lang].title}</h2>
+        <div style={{ margin: '18px 0 8px', fontSize: 32, fontWeight: 700, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ display: 'inline-block', minWidth: 90, transition: 'color 0.2s' }}>
+            ${price}
+          </span>
+          <span style={{ fontSize: 16, fontWeight: 400, marginLeft: 4 }}>
+            / {isAnnual ? (lang === 'en' ? 'year' : 'ano') : (lang === 'en' ? 'month' : 'mês')}
+          </span>
+          {isAnnual && (
+            <span style={{
+              marginLeft: 10,
+              background: '#22c55e',
+              color: '#101010',
+              borderRadius: 6,
+              fontWeight: 700,
+              fontSize: 15,
+              padding: '2px 8px',
+              letterSpacing: 1
+            }}>17% off</span>
+          )}
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 18 }}>
+          <div
+            onClick={() => setIsAnnual(!isAnnual)}
+            style={{
+              background: '#18181b',
+              border: 'none',
+              borderRadius: 20,
+              display: 'flex',
+              width: 178,
+              height: 40,
+              position: 'relative',
+              cursor: 'pointer',
+              userSelect: 'none',
+              alignItems: 'center'
+            }}
+          >
+            <div style={{
+              position: 'absolute',
+              top: 5,
+              left: isAnnual ? 84 : 0,
+              width: 94,
+              height: 30,
+              background: '#22c55e',
+              borderRadius: 16,
+              transition: 'left 0.4s cubic-bezier(.4,2,.6,1), width 0.4s cubic-bezier(.4,2,.6,1)',
+              zIndex: 1
+            }} />
+            <div style={{
+              width: 94,
+              zIndex: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: isAnnual ? '#22c55e' : '#101010',
+              fontWeight: 'bold',
+              fontSize: 17,
+              transition: 'color 0.2s'
+            }}>
+              {translations[lang].monthly}
+            </div>
+            <div style={{
+              width: 84,
+              zIndex: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: isAnnual ? '#101010' : '#22c55e',
+              fontWeight: 'bold',
+              fontSize: 17,
+              transition: 'color 0.2s'
+            }}>
+              {translations[lang].annual}
+            </div>
+          </div>
+        </div>
+        <ul style={{
+          listStyle: 'none',
+          padding: 0,
+          margin: '24px 0 0 0',
+          textAlign: 'left',
+          color: '#fff',
+          fontSize: 16,
+        }}>
+          {benefits[lang].map((b, i) => (
+            <li key={i} style={{ marginBottom: 10 }}>• {b}</li>
+          ))}
+        </ul>
+        <button style={{
+          marginTop: 32,
+          background: '#22c55e',
+          color: '#101010',
+          border: 'none',
+          borderRadius: 8,
+          fontWeight: 'bold',
+          fontFamily: 'Consolas, monospace',
+          fontSize: 18,
+          padding: '12px 0',
+          width: '100%',
+          cursor: 'pointer',
+          boxShadow: '0 2px 8px #0006'
+        }}>
+          {translations[lang].subscribe}
+        </button>
+      </div>
+    </div>
+  );
+} 
