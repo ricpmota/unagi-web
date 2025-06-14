@@ -111,7 +111,7 @@ export default function PlansPage() {
         borderRadius: 14,
         boxShadow: '0 0 24px #000a',
         padding: 18,
-        maxWidth: 270,
+        maxWidth: 300,
         width: '100%',
         textAlign: 'center',
         boxSizing: 'border-box',
