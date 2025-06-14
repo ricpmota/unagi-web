@@ -51,7 +51,7 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
         borderRadius: 12,
         padding: 12,
         width: '100%',
-        maxWidth: 290,
+        maxWidth: 260,
         boxSizing: 'border-box',
         boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
       }}>
