@@ -159,8 +159,6 @@ export default function Home() {
   const [blurResult, setBlurResult] = useState(false);
   const [showTeamSearchModal, setShowTeamSearchModal] = useState(false);
   const [showTeamSearchModalB, setShowTeamSearchModalB] = useState(false);
-  // Ref para saber se restaurou do localStorage
-  const restoredFromStorage = useRef(false);
 
   // Cores dinâmicas
   const bgColor = dark ? '#0B0B0B' : '#fff';
@@ -178,25 +176,6 @@ export default function Home() {
   const suggestionBg = dark ? '#222' : '#eee';
   const suggestionColor = dark ? 'white' : '#18181b';
   const suggestionActiveBg = dark ? '#333' : '#ccc';
-
-  // Restaurar times do localStorage ao carregar
-  useEffect(() => {
-    const savedA = localStorage.getItem('teamA');
-    const savedB = localStorage.getItem('teamB');
-    if (savedA) setTeamA(savedA);
-    if (savedB) setTeamB(savedB);
-    if (savedA) setTeamASelected(true);
-    if (savedA || savedB) restoredFromStorage.current = true;
-    // Restaurar adversaries se teamA foi restaurado
-    if (savedA && normalizeName(savedA) === normalizeName('Real Madrid')) {
-      setAdversaries(['Barcelona']);
-    } else if (savedA) {
-      setAdversaries([]);
-    }
-    // Limpar localStorage após restaurar
-    localStorage.removeItem('teamA');
-    localStorage.removeItem('teamB');
-  }, []);
 
   useEffect(() => {
     function handleResize() {
@@ -710,8 +689,6 @@ export default function Home() {
         onSelect={name => {
           setTeamB(name);
           setResult(null);
-          localStorage.setItem('teamA', teamA);
-          localStorage.setItem('teamB', name);
         }}
         dark={dark}
         autoFocus={false}

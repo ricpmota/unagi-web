@@ -10,9 +10,8 @@ interface TranslationContextType {
 const TranslationContext = createContext<TranslationContextType | undefined>(undefined);
 
 export function TranslationProvider({ children }: { children: React.ReactNode }) {
-  const userLang = typeof window !== 'undefined' ? navigator.language.slice(0, 2) : 'en';
   const [translate, setTranslate] = useState(false);
-  const lang: 'en' | 'pt' = translate ? (userLang === 'pt' ? 'pt' : 'en') : 'en';
+  const lang: 'en' | 'pt' = translate ? 'pt' : 'en';
 
   return (
     <TranslationContext.Provider value={{ translate, setTranslate, lang }}>

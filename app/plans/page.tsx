@@ -100,11 +100,9 @@ export default function PlansPage() {
       fontFamily: 'Consolas, monospace',
       padding: 16,
       position: 'relative',
+      marginTop: '5cm',
     }}>
       <HeaderWithMenu dark={true} />
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: 24, marginBottom: 16 }}>
-        <Image src="/logo.png" alt="logo" width={94} height={94} style={{ objectFit: 'contain', width: '2.5cm', height: '2.5cm' }} />
-      </div>
       <div style={{
         background: 'rgba(16,16,16,0.95)',
         border: '2px solid #22c55e',
@@ -118,7 +116,8 @@ export default function PlansPage() {
         margin: '0 auto',
         ...(typeof window !== 'undefined' && window.innerWidth < 340 ? { maxWidth: window.innerWidth - 20 } : {})
       }}>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 8 }}>
+        <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+          <Image src="/logo.png" alt="logo" width={59} height={59} style={{ objectFit: 'contain', width: 59.3, height: 59.3, marginLeft: 12 }} />
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 8px' }}>
             <button
               onClick={handleTranslate}

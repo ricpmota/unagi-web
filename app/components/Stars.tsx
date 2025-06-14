@@ -17,6 +17,10 @@ export default function Stars({ center, dark = true }: { center?: { x: number, y
     canvas.width = width;
     canvas.height = height;
 
+    // Definir quantidade de estrelas proporcional ao dispositivo
+    const isMobile = window.innerWidth <= 600;
+    const STAR_COUNT = isMobile ? 180 : 500;
+
     let centerX = center && center.x ? center.x : width / 2;
     let centerY = center && center.y ? center.y : height / 2;
 
@@ -32,7 +36,7 @@ export default function Stars({ center, dark = true }: { center?: { x: number, y
       star.alpha = 1;
     }
 
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < STAR_COUNT; i++) {
       let star = { x: 0, y: 0, vx: 0, vy: 0, size: 1, alpha: 1 };
       resetStar(star);
       stars.push(star);
@@ -75,7 +79,9 @@ export default function Stars({ center, dark = true }: { center?: { x: number, y
       canvas.width = width;
       canvas.height = height;
       stars = [];
-      for (let i = 0; i < 500; i++) {
+      const isMobile = window.innerWidth <= 600;
+      const STAR_COUNT = isMobile ? 180 : 500;
+      for (let i = 0; i < STAR_COUNT; i++) {
         let star = { x: 0, y: 0, vx: 0, vy: 0, size: 1, alpha: 1 };
         resetStar(star);
         stars.push(star);
