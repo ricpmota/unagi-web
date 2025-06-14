@@ -49,13 +49,14 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
       <div style={{
         background: dark ? '#18181b' : '#fff',
         borderRadius: 12,
-        padding: 20,
+        padding: 12,
         width: '100%',
-        maxWidth: 400,
+        maxWidth: 290,
+        boxSizing: 'border-box',
         boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-          <h3 style={{ color: dark ? '#fff' : '#18181b', margin: 0 }}>Buscar Time</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+          <h3 style={{ color: dark ? '#fff' : '#18181b', margin: 0 }}>Search Team</h3>
           <button
             onClick={onClose}
             style={{
@@ -74,7 +75,7 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Digite o nome do time..."
+          placeholder="Search"
           className="w-full bg-transparent border-none outline-none text-base"
           style={{
             width: '100%',
@@ -92,11 +93,11 @@ export default function TeamSearchModal({ open, onClose, teamList, onSelect, dar
             appearance: 'none'
           }}
         />
-        <div style={{ width: '100%', maxHeight: 180, overflowY: 'auto', borderRadius: 8, background: dark ? '#222' : '#eee', border: '1px solid #333' }}>
+        <div style={{ width: '100%', maxHeight: 140, overflowY: 'auto', borderRadius: 8, background: dark ? '#222' : '#eee', border: '1px solid #333' }}>
           {searchTerm.trim().length === 0 ? (
-            <div style={{ padding: 16, textAlign: 'center', color: '#aaa', fontSize: 14 }}>Digite para buscar</div>
+            <div style={{ padding: 12, textAlign: 'center', color: '#aaa', fontSize: 14 }}>Type to search</div>
           ) : filtered.length === 0 ? (
-            <div style={{ padding: 16, textAlign: 'center', color: '#aaa', fontSize: 14 }}>Nenhum time encontrado</div>
+            <div style={{ padding: 12, textAlign: 'center', color: '#aaa', fontSize: 14 }}>No team found</div>
           ) : (
             filtered.map((team, index) => (
               <div
