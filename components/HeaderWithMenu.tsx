@@ -4,6 +4,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { auth } from '../lib/firebase';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HeaderWithMenu({ dark = true }: { dark?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -60,13 +62,18 @@ export default function HeaderWithMenu({ dark = true }: { dark?: boolean }) {
         fontFamily: 'monospace',
         pointerEvents: 'none',
       }}>
-        <div style={{ color: fg, fontFamily: 'monospace', pointerEvents: 'auto' }}>
-          <div style={{ fontWeight: 'bold', fontSize: fontSizeLogo, lineHeight: 1 }}>{'unagi'}</div>
-          <div style={{ color: fgSub, fontSize: fontSizeSub, letterSpacing: 1 }}>powered by AI</div>
+        <div style={{ color: fg, fontFamily: 'monospace', pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <Link href="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Image src="/logo.png" alt="logo" width={59} height={59} style={{ objectFit: 'contain', width: 59.3, height: 59.3 }} />
+            <div style={{ marginLeft: '-2mm' }}>
+              <div style={{ fontWeight: 'bold', fontSize: fontSizeLogo, lineHeight: 1 }}>{'unagi'}</div>
+              <div style={{ color: fgSub, fontSize: fontSizeSub, letterSpacing: 1 }}>powered by AI</div>
+            </div>
+          </Link>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: 24, pointerEvents: 'auto' }}>
           <div style={{ textAlign: 'right', fontFamily: 'monospace', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-            <div style={{ color: fg, fontSize: fontSizeSub, letterSpacing: 1 }}>AI omni v4</div>
+            <div style={{ color: fg, fontSize: fontSizeSub, letterSpacing: 1, marginLeft: '10mm', paddingLeft: 0, minWidth: 0 }}>{'AI omni v4'}</div>
             {!loading && (
               user ? (
                 <button
